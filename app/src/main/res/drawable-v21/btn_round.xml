@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?colorPrimary"
+    >
+
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="?colorAccent"/>
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/ic_check_white_24dp"
+        android:bottom="@dimen/btn_ok_padding"
+        android:left="@dimen/btn_ok_padding"
+        android:right="@dimen/btn_ok_padding"
+        android:top="@dimen/btn_ok_padding"
+          >
+    </item>
+</ripple>
