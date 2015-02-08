@@ -38,7 +38,7 @@
         android:fontFamily="sans-serif-condensed"
         android:paddingBottom="15dp"
         android:paddingLeft="20dp"
-        android:text="Imbuer"
+        android:text="Geenie"
         android:textColor="#fffcfcfc"
         android:textSize="50sp" />
 

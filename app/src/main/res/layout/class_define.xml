@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/new_class"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="?colorPrimary"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_text_content_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_horizontal_margin">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/class_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Name"
+            app:baseColor="@android:color/white"
+            app:floatingLabel="highlight"
+            app:maxCharacters="20"
+            app:primaryColor="?colorAccent"
+            app:singleLineEllipsis="true" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/class_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Unique Key"
+            android:inputType="textPassword"
+            app:baseColor="@android:color/white"
+            app:floatingLabel="highlight"
+            app:maxCharacters="20"
+            app:minCharacters="6"
+            app:primaryColor="?colorAccent" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/class_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Description"
+            android:inputType="textPassword"
+            app:baseColor="@android:color/white"
+            app:floatingLabel="highlight"
+            app:maxCharacters="200"
+            app:primaryColor="?colorAccent"
+
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/new_class"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:text="Create a new class!"
+        android:textColor="?colorPrimary"
+        android:textSize="28sp" />
+
+
+    <Button
+        android:id="@+id/ok_new_class"
+        android:layout_width="@dimen/btn"
+        android:layout_height="@dimen/btn"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/new_class"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="-26dp"
+        android:background="@drawable/btn_round"
+        android:elevation="8dp" />
+
+
+</RelativeLayout>
