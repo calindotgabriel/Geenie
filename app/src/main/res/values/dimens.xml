@@ -5,5 +5,7 @@
     <dimen name="activity_text_content_margin">32dp</dimen>
     <dimen name="btn">54dp</dimen>
     <dimen name="btn_ok_padding">8dp</dimen>
+    <dimen name="up_text">8dp</dimen>
+
 
 </resources>

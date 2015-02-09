@@ -1,7 +1,6 @@
 package ro.geenie;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -14,32 +13,25 @@ import butterknife.OnClick;
 /**
  * Created by motan on 08.02.2015.
  */
-public class LoginActivity extends Activity {
+public class SignUpActivity extends Activity {
 
-    @InjectView(R.id.username_login)
+    @InjectView(R.id.fullname_signup)
+    MaterialEditText fullname;
+    @InjectView(R.id.email_signup)
+    MaterialEditText email;
+    @InjectView(R.id.username_signup)
     MaterialEditText username;
-
-    @InjectView(R.id.password_login)
+    @InjectView(R.id.password_signup)
     MaterialEditText password;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
     }
 
-    @OnClick(R.id.ok_login) void logIn() {
-        Toast.makeText(this, username.getText() + " / " + password.getText(), Toast.LENGTH_SHORT).show();
+    @OnClick(R.id.ok_signup) void signUp() {
+        Toast.makeText(this, fullname.getText() + " & " + password.getText(), Toast.LENGTH_SHORT).show();
     }
-
-    @OnClick(R.id.signup_login) void goSignUp() {
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-        startActivity(intent);
-    }
-
-
-
-
 }
