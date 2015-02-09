@@ -49,7 +49,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Class Description"
-            android:inputType="textPassword"
             app:baseColor="@android:color/white"
             app:floatingLabel="highlight"
             app:maxCharacters="200"

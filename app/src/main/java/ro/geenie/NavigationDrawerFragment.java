@@ -1,6 +1,7 @@
 package ro.geenie;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -73,7 +74,7 @@ public class NavigationDrawerFragment extends Fragment implements DrawerAdapter.
             mFromSavedInstanceState = true;
         }
         if (savedInstanceState == null) {
-            //TODO default screen
+            startActivity(new Intent(getActivity(), NewClassActivity.class));
         }
     }
 
@@ -137,7 +138,18 @@ public class NavigationDrawerFragment extends Fragment implements DrawerAdapter.
     @Override
     public void itemClicked(View view, int position) {
 
-        //change errything
+        switch (position) {
+            case 0:
+                startActivity(new Intent(getActivity(), NewClassActivity.class));
+                break;
+            case 1:
+                startActivity(new Intent(getActivity(), ScheduleActivity.class));
+                break;
+            default:
+                break;
+        }
+
+
 
         mDrawerLayout.closeDrawers();
 
