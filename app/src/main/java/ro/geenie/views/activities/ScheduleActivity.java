@@ -1,4 +1,4 @@
-package ro.geenie;
+package ro.geenie.views.activities;
 
 import android.support.v7.app.ActionBarActivity;
 

@@ -1,4 +1,4 @@
-package ro.geenie;
+package ro.geenie.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,12 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ro.geenie.R;
+import ro.geenie.models.DrawerItem;
+import ro.geenie.views.activities.NewClassActivity;
+import ro.geenie.views.activities.ScheduleActivity;
+import ro.geenie.views.adapters.DrawerAdapter;
 
 /**
  * Created by loopiezlol on 08.02.2015.

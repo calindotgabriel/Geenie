@@ -1,4 +1,4 @@
-package ro.geenie;
+package ro.geenie.views.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import java.util.Collections;
 import java.util.List;
+
+import ro.geenie.models.DrawerItem;
+import ro.geenie.R;
 
 /**
  * Created by loopiezlol on 08.02.2015.

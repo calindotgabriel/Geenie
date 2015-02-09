@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/fragment_navigation_drawer"
-        android:name="ro.geenie.NavigationDrawerFragment"
+        android:name="ro.geenie.fragments.NavigationDrawerFragment"
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"

@@ -1,4 +1,4 @@
-package ro.geenie;
+package ro.geenie.views.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import ro.geenie.R;
 
 /**
  * Created by loopiezlol on 08.02.2015.

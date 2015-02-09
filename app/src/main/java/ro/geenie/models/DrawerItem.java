@@ -1,4 +1,4 @@
-package ro.geenie;
+package ro.geenie.models;
 
 /**
  * Created by loopiezlol on 08.02.2015.
