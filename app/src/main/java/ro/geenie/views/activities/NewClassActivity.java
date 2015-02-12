@@ -2,6 +2,7 @@ package ro.geenie.views.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -15,6 +16,8 @@ import ro.geenie.R;
  * Created by loopiezlol on 08.02.2015.
  */
 public class NewClassActivity extends Activity {
+
+    Toolbar toolbar;
 
     @InjectView(R.id.class_name)
     MaterialEditText className;

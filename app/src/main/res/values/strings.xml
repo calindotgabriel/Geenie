@@ -14,5 +14,27 @@
     <string name="signup_message">Not one of us ? Sign up here !</string>
     <string name="fullname">Fullname</string>
     <string name="email">Email Adress</string>
+    <string name="action_today">Go to today</string>
+    <string name="action_day_view">Day view</string>
+    <string name="action_three_day_view">3 day view</string>
+    <string name="action_week_view">Week view</string>
+    <string name="action_new">Create new string</string>
+
+
+    <string-array name="nav_drawer_items">
+        <item>Dash</item>
+        <item>Schedule</item>
+        <item>Members</item>
+        <item>Files</item>
+        <item>Settings</item>
+    </string-array>
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_school_black_24dp</item>
+        <item>@drawable/ic_today_black_24dp</item>
+        <item>@drawable/ic_people_black_24dp</item>
+        <item>@drawable/ic_folder_shared_black_24dp</item>
+        <item>@drawable/ic_settings_black_24dp</item>
+    </array>
+
 
 </resources>
