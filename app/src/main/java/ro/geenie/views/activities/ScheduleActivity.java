@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import ro.geenie.R;
+import ro.geenie.fragments.NewEventDialog;
 
 /**
  * Created by loopiezlol on 09.02.2015.
@@ -28,6 +29,7 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private static final int TYPE_WEEK_VIEW = 3;
+    ArrayList<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
     private WeekView mWeekView;
@@ -51,6 +53,14 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
         mWeekView.setMonthChangeListener(this);
 
         mWeekView.setEventLongPressListener(this);
+
+        mWeekView.setEmptyViewLongPressListener(new WeekView.EmptyViewLongPressListener() {
+            @Override
+            public void onEmptyViewLongPress(Calendar calendar) {
+
+                new NewEventDialog().show(ScheduleActivity.this);
+            }
+        });
 
     }
 
@@ -101,67 +111,78 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
                     mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
                 }
                 return true;
+
+            case R.id.action_new_event:
+                new NewEventDialog().show(ScheduleActivity.this);
+
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onEventClick(WeekViewEvent event, RectF rectF) {
-        Toast.makeText(ScheduleActivity.this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(ScheduleActivity.this, "Clicked " + getEventTitle(event.getStartTime()), Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF rectF) {
-        Toast.makeText(ScheduleActivity.this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+        events.remove(event);
+        mWeekView.notifyDatasetChanged();
+        Toast.makeText(ScheduleActivity.this, "Deleted " + event.getName(), Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+        List<WeekViewEvent> weekviewEvents = new ArrayList<WeekViewEvent>();
+        for (WeekViewEvent event : events) {
+            if (event.getStartTime().get(Calendar.MONTH) + 1 == newMonth && event.getStartTime().get(Calendar.YEAR) == newYear) {
+                weekviewEvents.add(event);
+            }
+        }
+        return weekviewEvents;
 
-        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-
-        Calendar startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth - 1);
-        startTime.set(Calendar.YEAR, newYear);
-        Calendar endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR, 1);
-        endTime.set(Calendar.MONTH, newMonth - 1);
-        WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_01));
-        events.add(event);
-
-        startTime = Calendar.getInstance();
-        startTime.set(Calendar.DAY_OF_MONTH, 15);
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth - 1);
-        startTime.set(Calendar.YEAR, newYear);
-        endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR_OF_DAY, 3);
-        event = new WeekViewEvent(4, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_04));
-        events.add(event);
-
-        startTime = Calendar.getInstance();
-        startTime.set(Calendar.DAY_OF_MONTH, 1);
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth - 1);
-        startTime.set(Calendar.YEAR, newYear);
-        endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR_OF_DAY, 3);
-        event = new WeekViewEvent(5, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_01));
-        events.add(event);
-
-        return events;
     }
 
     private String getEventTitle(Calendar time) {
         return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
 
     }
+
+    public void createEvent() {
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(Calendar.HOUR_OF_DAY, 1);
+        startTime.set(Calendar.MINUTE, 0);
+        startTime.set(Calendar.MONTH, Calendar.FEBRUARY);
+        Calendar endTime = (Calendar) startTime.clone();
+        endTime.add(Calendar.HOUR, 2);
+        WeekViewEvent event = new WeekViewEvent(0, "MY EVENT", startTime, endTime);
+        event.setColor(getResources().getColor(R.color.event_color_01));
+        events.add(event);
+
+        mWeekView.notifyDatasetChanged();
+
+
+
+    }
 }
+
+/*
+
+
+        Calendar startTime1 = Calendar.getInstance();
+        startTime1.set(Calendar.HOUR_OF_DAY, 1 );
+        startTime1.set(Calendar.DAY_OF_MONTH,1);
+        startTime1.set(Calendar.MINUTE,0);
+        startTime1.set(Calendar.MONTH,Calendar.MARCH);
+
+        Calendar endTime1 = (Calendar) startTime1.clone();
+        endTime1.set(Calendar.HOUR_OF_DAY,4);
+        WeekViewEvent event1 = new WeekViewEvent(2, "MY EVENT", startTime1, endTime1);
+        event1.setColor(getResources().getColor(R.color.event_color_03));
+        events.add(event1);
+
+        mWeekView.notifyDatasetChanged();*/
