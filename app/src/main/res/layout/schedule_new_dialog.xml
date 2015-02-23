@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/schedule_dialog"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -29,7 +30,145 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:text="Choose event color"
+        android:textColor="?colorPrimary"
+        android:textSize="20dp" />
+
+
+    <GridLayout
+        android:id="@+id/grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:clipToPadding="false"
+        android:columnCount="4"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp"
+        android:rowCount="2"
+        tools:ignore="UselessParent">
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check_white_24dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check_white_24dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check_white_24dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check_white_24dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check_white_24dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check_white_24dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check_white_24dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check_white_24dp" />
+
+        </FrameLayout>
+
+    </GridLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         android:fontFamily="sans-serif"
         android:text="Set hour range"
         android:textColor="?colorPrimary"
@@ -49,7 +188,7 @@
         app:selectorSize="4dp"
         app:tickEnd="24"
         app:tickInterval="1"
-        app:tickStart="1" />
+        app:tickStart="0" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,79 +196,15 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif"
-        android:text="Choose event color"
+        android:text="Choose event day"
         android:textColor="?colorPrimary"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/days_spinner"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
-            android:layout_marginRight="10dp"
-            app:cb_color="?colorAccent"
-            app:cb_pressedRingWidth="8dip" />
-
-        <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
-            android:layout_marginRight="20dp"
-            app:cb_color="?colorPrimary"
-            app:cb_pressedRingWidth="8dip" />
-
-        <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
-            android:layout_marginRight="20dp"
-            app:cb_color="?colorAccent"
-            app:cb_pressedRingWidth="8dip" />
-
-        <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
-            app:cb_color="?colorPrimaryDark"
-            app:cb_pressedRingWidth="8dip" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
-            android:layout_marginRight="10dp"
-            app:cb_color="?colorAccent"
-            app:cb_pressedRingWidth="8dip" />
-
-        <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
-            android:layout_marginRight="20dp"
-            app:cb_color="?colorPrimary"
-            app:cb_pressedRingWidth="8dip" />
-
-        <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
-            android:layout_marginRight="20dp"
-            app:cb_color="?colorAccent"
-            app:cb_pressedRingWidth="8dip" />
-
-        <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
-            app:cb_color="?colorPrimaryDark"
-            app:cb_pressedRingWidth="8dip" />
-
-    </LinearLayout>
+        android:layout_marginTop="20dp" />
 
 
 </LinearLayout>

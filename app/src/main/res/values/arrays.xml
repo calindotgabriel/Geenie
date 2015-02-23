@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="colors">
+
+        <item>#1E88E5</item>
+        <item>#03A9F4</item>
+        <item>#009688</item>
+        <item>#4CAF50</item>
+        <item>#CDDC39</item>
+        <item>#FFEB3B</item>
+        <item>#FF9800</item>
+        <item>#FF5722</item>
+    </array>
+
+    <string-array name="weekdays">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+
+    </string-array>
+
+
+</resources>

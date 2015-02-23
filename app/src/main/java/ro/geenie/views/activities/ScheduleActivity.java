@@ -23,7 +23,7 @@ import ro.geenie.fragments.NewEventDialog;
  * Created by loopiezlol on 09.02.2015.
  */
 public class ScheduleActivity extends BaseActivity implements WeekView.MonthChangeListener,
-        WeekView.EventClickListener, WeekView.EventLongPressListener {
+        WeekView.EventClickListener, WeekView.EventLongPressListener, NewEventDialog.eventCreateListener {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -152,37 +152,32 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
 
     }
 
-    public void createEvent() {
-        Calendar startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 1);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, Calendar.FEBRUARY);
-        Calendar endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR, 2);
-        WeekViewEvent event = new WeekViewEvent(0, "MY EVENT", startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_01));
-        events.add(event);
+    public void createEvent(String eventName, int startHour, int endHour, int colorIndex, int dayOfWeek) {
+
+
+        for (int i = -1000; i <= 1000; i = i + 7) {
+            Calendar startTime = Calendar.getInstance();
+            startTime.set(Calendar.HOUR_OF_DAY, startHour);
+            startTime.set(Calendar.MINUTE, 0);
+            startTime.set(Calendar.MONTH, Calendar.FEBRUARY);
+            startTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+            startTime.add(Calendar.DAY_OF_MONTH, i);
+            Calendar endTime = (Calendar) startTime.clone();
+            endTime.set(Calendar.HOUR_OF_DAY, endHour);
+            WeekViewEvent event = new WeekViewEvent(0, eventName, startTime, endTime);
+            final TypedArray ta = getResources().obtainTypedArray(R.array.colors);
+            int[] mColors = new int[ta.length()];
+            for (int j = 0; j < ta.length(); j++)
+                mColors[j] = ta.getColor(j, 0);
+            ta.recycle();
+            event.setColor(mColors[colorIndex]);
+            events.add(event);
+
+        }
 
         mWeekView.notifyDatasetChanged();
-
 
 
     }
 }
 
-/*
-
-
-        Calendar startTime1 = Calendar.getInstance();
-        startTime1.set(Calendar.HOUR_OF_DAY, 1 );
-        startTime1.set(Calendar.DAY_OF_MONTH,1);
-        startTime1.set(Calendar.MINUTE,0);
-        startTime1.set(Calendar.MONTH,Calendar.MARCH);
-
-        Calendar endTime1 = (Calendar) startTime1.clone();
-        endTime1.set(Calendar.HOUR_OF_DAY,4);
-        WeekViewEvent event1 = new WeekViewEvent(2, "MY EVENT", startTime1, endTime1);
-        event1.setColor(getResources().getColor(R.color.event_color_03));
-        events.add(event1);
-
-        mWeekView.notifyDatasetChanged();*/
