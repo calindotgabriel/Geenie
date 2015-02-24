@@ -26,6 +26,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.appyvet.rangebar.RangeBar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.util.Calendar;
+
 import ro.geenie.R;
 
 public class NewEventDialog extends DialogFragment implements View.OnClickListener {
@@ -39,9 +41,14 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
     GridLayout list;
     Integer colorIndex;
     int dayOfWeek;
+
     private final MaterialDialog.ButtonCallback mButtonCallback = new MaterialDialog.ButtonCallback() {
         @Override
         public void onPositive(MaterialDialog materialDialog) {
+
+            if (getArguments() != null)
+                mCallback.deleteEvent(getArguments().getInt("position"));
+
             eventName = editEventName.getText().toString();
             if (!eventName.isEmpty()) {
                 if (colorIndex != null) {
@@ -72,7 +79,6 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
             for (int i = 0; i < list.getChildCount(); i++) {
                 FrameLayout child = (FrameLayout) list.getChildAt(i);
                 child.getChildAt(0).setVisibility(View.GONE);
-
             }
             ((ViewGroup) v).getChildAt(0).setVisibility(View.VISIBLE);
         }
@@ -104,6 +110,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
         editEventName = (MaterialEditText) dialog.getCustomView().findViewById(R.id.event_name);
 
         //RangeBar for start and end hours
+
         rangeBar = (RangeBar) dialog.getCustomView().findViewById(R.id.rangebar);
         rangeBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
@@ -112,7 +119,6 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
                 endHour = end;
             }
         });
-
 
         //colors
 
@@ -144,7 +150,6 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
             }
         }
 
-
         //dayofweek
 
         spinner = (Spinner) dialog.getCustomView().findViewById(R.id.days_spinner);
@@ -157,7 +162,6 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 dayOfWeek = position;
-                Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -166,6 +170,30 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
 
             }
         });
+
+        spinner.setSelection(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1);
+
+
+        //Populate every element if editable
+
+        if (getArguments() != null) {
+            Bundle bundle = getArguments();
+
+            //name
+            editEventName.setText(bundle.getString("eventName"));
+
+            //color
+            FrameLayout child = (FrameLayout) list.getChildAt(bundle.getInt("color"));
+            child.performClick();
+
+            //rangebarb
+            rangeBar.setRangePinsByIndices(bundle.getInt("startHour"), bundle.getInt("endHour"));
+
+            //spinner
+            spinner.setSelection(bundle.getInt("dayOfWeek") - 1);
+
+        }
+
 
 
         return dialog;
@@ -202,6 +230,8 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
 
     public interface eventCreateListener {
         public void createEvent(String eventName, int startHour, int endHour, int color, int dayOfWeek);
+
+        public void deleteEvent(int position);
     }
 
 

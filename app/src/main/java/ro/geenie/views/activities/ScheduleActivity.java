@@ -33,6 +33,7 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
     private WeekView mWeekView;
+    private TypedArray ta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +55,17 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
 
         mWeekView.setEventLongPressListener(this);
 
-        mWeekView.setEmptyViewLongPressListener(new WeekView.EmptyViewLongPressListener() {
+        /*mWeekView.setEmptyViewLongPressListener(new WeekView.EmptyViewLongPressListener() {
             @Override
             public void onEmptyViewLongPress(Calendar calendar) {
 
                 new NewEventDialog().show(ScheduleActivity.this);
             }
-        });
+        });*/
+
+        ta = getResources().obtainTypedArray(R.array.colors);
+
+        mWeekView.goToHour(7);
 
     }
 
@@ -76,15 +81,18 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
         switch (id) {
             case R.id.action_today:
                 mWeekView.goToToday();
+                mWeekView.goToHour(7);
                 return true;
             case R.id.action_day_view:
                 if (mWeekViewType != TYPE_DAY_VIEW) {
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_DAY_VIEW;
                     mWeekView.setNumberOfVisibleDays(1);
+
                     mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
                     mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                     mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    mWeekView.goToHour(7);
                 }
                 return true;
             case R.id.action_three_day_view:
@@ -97,6 +105,7 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
                     mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
                     mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                     mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    mWeekView.goToHour(7);
                 }
                 return true;
             case R.id.action_week_view:
@@ -109,6 +118,7 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
                     mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
                     mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
                     mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
+                    mWeekView.goToHour(7);
                 }
                 return true;
 
@@ -129,9 +139,23 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF rectF) {
-        events.remove(event);
-        mWeekView.notifyDatasetChanged();
-        Toast.makeText(ScheduleActivity.this, "Deleted " + event.getName(), Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        bundle.putString("eventName", event.getName());
+        bundle.putInt("startHour", event.getStartTime().get(Calendar.HOUR_OF_DAY));
+        bundle.putInt("endHour", event.getEndTime().get(Calendar.HOUR_OF_DAY));
+        int colorIndex = 0;
+        int localColor = event.getColor();
+        for (int i = 0; i < ta.length(); i++) {
+            if (localColor == ta.getColor(i, 0))
+                colorIndex = i;
+        }
+        bundle.putInt("color", colorIndex);
+        bundle.putInt("dayOfWeek", event.getStartTime().get(Calendar.DAY_OF_WEEK));
+        bundle.putInt("position", events.indexOf(event));
+
+        NewEventDialog dialog = new NewEventDialog();
+        dialog.setArguments(bundle);
+        dialog.show(ScheduleActivity.this);
 
     }
 
@@ -164,12 +188,11 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
             startTime.add(Calendar.DAY_OF_MONTH, i);
             Calendar endTime = (Calendar) startTime.clone();
             endTime.set(Calendar.HOUR_OF_DAY, endHour);
+            endTime.add(Calendar.SECOND, -1);
             WeekViewEvent event = new WeekViewEvent(0, eventName, startTime, endTime);
-            final TypedArray ta = getResources().obtainTypedArray(R.array.colors);
             int[] mColors = new int[ta.length()];
             for (int j = 0; j < ta.length(); j++)
                 mColors[j] = ta.getColor(j, 0);
-            ta.recycle();
             event.setColor(mColors[colorIndex]);
             events.add(event);
 
@@ -178,6 +201,10 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
         mWeekView.notifyDatasetChanged();
 
 
+    }
+
+    public void deleteEvent(int position) {
+        events.remove(position);
     }
 }
 
