@@ -32,7 +32,7 @@ import ro.geenie.R;
 
 public class NewEventDialog extends DialogFragment implements View.OnClickListener {
 
-    eventCreateListener mCallback;
+    scheduleActivityListener mCallback;
     MaterialEditText editEventName;
     String eventName;
     RangeBar rangeBar;
@@ -47,7 +47,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
         public void onPositive(MaterialDialog materialDialog) {
 
             if (getArguments() != null)
-                mCallback.deleteEvent(getArguments().getInt("position"));
+                mCallback.deleteEvent(getArguments().getString("eventName"));
 
             eventName = editEventName.getText().toString();
             if (!eventName.isEmpty()) {
@@ -60,6 +60,20 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
 
             } else {
                 Toast.makeText(getActivity(), "You should give your event a name!", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        @Override
+        public void onNegative(MaterialDialog materialDialog) {
+            if (getArguments() != null) {
+
+                //Toast.makeText(getActivity(), getArguments().getInt("position"), Toast.LENGTH_SHORT).show();
+
+                mCallback.deleteEvent(getArguments().getString("eventName"));
+                materialDialog.dismiss();
+            } else {
+                materialDialog.dismiss();
             }
 
         }
@@ -88,7 +102,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mCallback = (eventCreateListener) activity;
+            mCallback = (scheduleActivityListener) activity;
 
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString());
@@ -102,6 +116,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
                 .title("Create new event")
                 .customView(R.layout.schedule_new_dialog, true)
                 .positiveText("Ok")
+                .negativeText("Delete")
                 .autoDismiss(false)
                 .callback(mButtonCallback)
                 .build();
@@ -161,7 +176,11 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                dayOfWeek = position;
+                dayOfWeek = position + 1;
+                if (getArguments() != null) {
+                    rangeBar.setRangePinsByIndices(getArguments().getInt("startHour"), getArguments().getInt("endHour"));
+                }
+
             }
 
             @Override
@@ -178,6 +197,9 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
 
         if (getArguments() != null) {
             Bundle bundle = getArguments();
+
+            //dialog title
+            dialog.setTitle("Edit your event");
 
             //name
             editEventName.setText(bundle.getString("eventName"));
@@ -228,10 +250,11 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
         show(context.getFragmentManager(), "NEW EVENT");
     }
 
-    public interface eventCreateListener {
+    public interface scheduleActivityListener {
+
         public void createEvent(String eventName, int startHour, int endHour, int color, int dayOfWeek);
 
-        public void deleteEvent(int position);
+        public void deleteEvent(String eventName);
     }
 
 
