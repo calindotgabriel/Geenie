@@ -200,7 +200,7 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
             events.add(event);
         }
 
-        for (int i = 0; i >= -1000; i = i - 7) {
+        for (int i = -7; i >= -1000; i = i - 7) {
             Calendar startTime = Calendar.getInstance();
             startTime.set(Calendar.HOUR_OF_DAY, startHour);
             startTime.set(Calendar.MINUTE, 0);
@@ -236,3 +236,5 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
     }
 }
 
+
+//TODO - make events recurring inside onMonthCreate BAJA
