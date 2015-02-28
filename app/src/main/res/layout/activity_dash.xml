@@ -1,4 +1,6 @@
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -23,6 +25,19 @@
             android:layout_below="@id/app_bar"
             android:scrollbars="vertical"
 
+            />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/fab_new_dash_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add_white_24dp"
+            fab:fab_colorNormal="?colorAccent"
+            fab:fab_colorRipple="?colorPrimaryDark"
             />
 
 

@@ -3,7 +3,6 @@ package ro.geenie.views.activities;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -11,6 +10,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ro.geenie.R;
+import ro.geenie.models.LoginTaskParams;
+import ro.geenie.network.DbLoginAsyncTask;
 
 /**
  * Created by motan on 08.02.2015.
@@ -35,11 +36,20 @@ public class LoginActivity extends BaseActivity {
                 .obtainTypedArray(R.array.nav_drawer_icons);//load icons from strings.xml
 
         set(navMenuTitles, navMenuIcons);
+
+
+//        new ServletPostAsyncTask().execute(new Pair<Context, String>(this, "Eusebio"));
+//        LoginTaskParams loginTaskParams = new LoginTaskParams(this, "Eusebiu", "123456");
+//        new LoginAsyncTask().execute(loginTaskParams);
+
     }
 
-    @OnClick(R.id.ok_login)
-    void logIn() {
-        Toast.makeText(this, username.getText() + " / " + password.getText(), Toast.LENGTH_SHORT).show();
+    @OnClick(R.id.ok_login) void goLogin(){
+        LoginTaskParams loginParams = new LoginTaskParams(this,
+            username.getText().toString(),
+            password.getText().toString()
+            );
+        new DbLoginAsyncTask().execute(loginParams);
     }
 
     @OnClick(R.id.signup_login)

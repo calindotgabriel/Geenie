@@ -3,8 +3,12 @@
     <application>myApplicationId</application>
     <version>1</version>
     <threadsafe>true</threadsafe>
+    <use-google-connector-j>true</use-google-connector-j>
 
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
+        <propery name="db_username" value="root"/>
+        <propery name="db_password" value="iubiresucces95"/>
+        <propery name="db_default_url" value="jdbc:mysql://173.194.253.100/defaultGroup"/>
     </system-properties>
 </appengine-web-app>

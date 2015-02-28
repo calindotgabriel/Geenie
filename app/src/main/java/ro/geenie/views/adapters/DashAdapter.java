@@ -40,7 +40,6 @@ public class DashAdapter extends RecyclerView.Adapter<DashAdapter.ViewHolder> {
         holder.cardName.setText(dashItem.getName());
         holder.cardText.setText(dashItem.getText());
 
-
     }
 
 

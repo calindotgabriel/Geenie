@@ -2,8 +2,6 @@ package ro.geenie.backend;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,21 +22,13 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String url = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            url = "jdbc:mysql://127.0.0.1:3306/?user=root";
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        resp.setContentType("text/plain");
         PrintWriter out = resp.getWriter();
 
-        try {
-            Connection conn = DriverManager.getConnection(url);
-            try {
-                String name = req.getParameter("username")
-            }
-        }
+        out.println(username);
+        out.println(password);
     }
 }

@@ -1,0 +1,19 @@
+#
+# generated on 2015/02/28 02:38:51
+#
+# --table-start--
+dataClass=ro.geenie.models.Member
+tableName=members
+# --table-fields-start--
+# --field-start--
+fieldName=user
+# --field-end--
+# --field-start--
+fieldName=isAdmin
+# --field-end--
+# --field-start--
+fieldName=isOwner
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################

@@ -182,7 +182,6 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
 
     public void createEvent(String eventName, int startHour, int endHour, int colorIndex, int dayOfWeek) {
 
-
         for (int i = 0; i <= 1000; i = i + 7) {
             Calendar startTime = Calendar.getInstance();
             startTime.set(Calendar.HOUR_OF_DAY, startHour);

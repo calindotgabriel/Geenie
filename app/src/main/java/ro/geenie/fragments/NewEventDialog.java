@@ -114,7 +114,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
 
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .title("Create new event")
-                .customView(R.layout.schedule_new_dialog, true)
+                .customView(R.layout.dialog_new_schedule, true)
                 .positiveText("Ok")
                 .negativeText("Delete")
                 .autoDismiss(false)

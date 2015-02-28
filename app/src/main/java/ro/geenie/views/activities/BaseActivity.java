@@ -138,7 +138,7 @@ public class BaseActivity extends ActionBarActivity {
         Intent intent;
         switch (position) {
             case 0:
-                intent = new Intent(this, LoginActivity.class);
+                intent = new Intent(this, DashActivity.class);
                 startActivity(intent);
                 finish();
                 break;
