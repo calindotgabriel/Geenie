@@ -49,9 +49,6 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
 
         initDrawer();
 
-        mockList.add(new AssignmentItem("Examen Matematica", 0));
-        mockList.add(new AssignmentItem("Tema Religie", 0));
-
         initView(mockList, R.id.assignment_recycler_view, R.layout.assignement_card);
 
     }
@@ -76,9 +73,9 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
         fab.attachToRecyclerView(recyclerView);
     }
 
-    public void createAssignment(String assignmentTitle) {
-        mockList.add(new AssignmentItem(assignmentTitle, 0));
-        recyclerView.invalidate();
+    public void createAssignment(String assignmentTitle, Calendar calendar) {
+        mockList.add(new AssignmentItem(assignmentTitle, 0, calendar));
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -87,14 +84,12 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
         new NewAssignmentDialog().show(this);
     }
 
-    public void startAlarm(int id, String name) {
+    public void startAlarm(int id, String name, Calendar calendar) {
         alarmIntent = new Intent(this, AlarmReceiver.class);
         alarmIntent.putExtra("name", name);
         alarmIntent.putExtra("id", id);
         pendingIntent = PendingIntent.getBroadcast(this, id, alarmIntent, 0);
         manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 10);
         manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
     }

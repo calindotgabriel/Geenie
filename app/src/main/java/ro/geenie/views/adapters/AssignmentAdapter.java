@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.List;
 
 import ro.geenie.R;
@@ -43,18 +44,21 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         AssignmentItem assignmentItem = assignmentItems.get(position);
         holder.cardTitle.setText(assignmentItem.getTitle());
+
         int click = assignmentItem.getClick();
+        final Calendar calendar = assignmentItem.getCalendar();
         if (click == 0) {
             holder.alarmSwitch.setChecked(false);
         } else {
 
             holder.alarmSwitch.setChecked(true);
         }
+
         holder.alarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    ((AssignmentsActivity) context).startAlarm(position, holder.cardTitle.getText().toString());
+                    ((AssignmentsActivity) context).startAlarm(position, holder.cardTitle.getText().toString(), calendar);
                 } else {
                     ((AssignmentsActivity) context).cancelAlarm(position);
                 }
@@ -86,6 +90,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
         public final TextView cardTitle;
         public CardView card;
         public Switch alarmSwitch;
+
 
         public ViewHolder(final View itemView) {
             super(itemView);
