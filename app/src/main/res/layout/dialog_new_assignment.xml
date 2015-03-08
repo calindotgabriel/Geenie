@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/schedule_dialog"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_text_content_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/assignment_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="Assignment Name"
+        android:textColor="?colorPrimary"
+        android:textColorHint="?colorPrimaryDark"
+        android:textSize="25dp"
+        app:baseColor="?colorPrimary"
+        app:floatingLabel="highlight"
+        app:maxCharacters="30"
+        app:primaryColor="?colorAccent"
+        app:singleLineEllipsis="true" />
+
+    <Button
+        android:id="@+id/datebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_today_black_24dp"
+        android:fontFamily="sans-serif-thin"
+        android:text="Date picker" />
+
+    <Button
+        android:id="@+id/hourbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_alarm_black_24dp"
+        android:fontFamily="sans-serif-thin"
+        android:text="Hour picker" />
+
+
+</LinearLayout>
