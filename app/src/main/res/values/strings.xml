@@ -26,6 +26,7 @@
         <item>Schedule</item>
         <item>Members</item>
         <item>Files</item>
+        <item>Assignments</item>
         <item>Settings</item>
     </string-array>
     <array name="nav_drawer_icons">
@@ -33,6 +34,7 @@
         <item>@drawable/ic_today_black_24dp</item>
         <item>@drawable/ic_people_black_24dp</item>
         <item>@drawable/ic_folder_shared_black_24dp</item>
+        <item>@drawable/ic_alarm_black_24dp</item>
         <item>@drawable/ic_settings_black_24dp</item>
     </array>
 
