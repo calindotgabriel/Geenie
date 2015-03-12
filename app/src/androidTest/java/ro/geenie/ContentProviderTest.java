@@ -9,6 +9,7 @@ import android.test.ApplicationTestCase;
 import android.util.Log;
 
 import ro.geenie.provider.PostContract;
+import ro.geenie.util.Utils;
 
 /**
  * Created by motan on 09.03.2015.
@@ -34,38 +35,6 @@ public class ContentProviderTest extends ApplicationTestCase<Application> {
     }
 
 
-
-//    public void testPostContentProvider() {
-////        int first = resolver.delete(Uri.withAppendedPath(POSTS_ROUTE, Integer.toString(6)), null, null);
-////        assertNotSame(0, first);
-//        ContentValues tempValues =
-//        resolver.insert(Uri.withAppendedPath(POSTS_ROUTE, Integer.toString(4)))
-//
-//
-//        int old_count = c.getCount();
-//        assertNotSame(0, old_count);
-//        logRecords(c);
-//
-//        // create a post
-//        ContentValues cv = new ContentValues();
-//        int id = old_count + 1;
-//        cv.put(KEY_ID, id);
-//        cv.put(KEY_NAME, "dede");
-//        cv.put(KEY_TEXT, "aka aka");
-//        Uri uri = resolver.insert(POSTS_ROUTE, cv);
-//        assertNotNull(uri);
-//        Uri expected_uri = Uri.withAppendedPath(POSTS_ROUTE, Integer.toString(id));
-//        assertEquals(expected_uri, uri);
-//        assertEquals(getCurrentCount(resolver), old_count + 1);
-//
-//        // now delete it
-//        int delete_count = resolver.delete(expected_uri, null, null);
-//        assertNotSame(0, delete_count);
-//        assertEquals(getCurrentCount(resolver), old_count);
-//
-//
-//    }
-
     public void testQuery() {
         Cursor c = queryAllPosts();
         assertNotNull(c);
@@ -85,7 +54,7 @@ public class ContentProviderTest extends ApplicationTestCase<Application> {
         values.put(KEY_TEXT, "am boala pamantului");
         Uri uri = resolver.insert(POSTS_ROUTE, values);
 
-        Uri expected_uri = getIdUri(id);
+        Uri expected_uri = Utils.getIdUri(id);
         assertEquals(expected_uri, uri);
         assertEquals(getCurrentCount(), before + 1);
     }
@@ -97,7 +66,7 @@ public class ContentProviderTest extends ApplicationTestCase<Application> {
         int count = getCurrentCount();
         assertNotSame(0, count); // can't delete if empty db
 
-        int deleted = resolver.delete(getIdUri(count), null, null);
+        int deleted = resolver.delete(Utils.getIdUri(count), null, null);
         assertNotSame(0, deleted); // did delete something
 
         assertEquals(getCurrentCount(), count - 1);
@@ -111,20 +80,14 @@ public class ContentProviderTest extends ApplicationTestCase<Application> {
 
         ContentValues values = new ContentValues();
         int id = before;
-        values.put(KEY_ID, id);
         values.put(KEY_NAME, "ionutz likid");
         values.put(KEY_TEXT, "cee face baba ?");
 
-        int updated = resolver.update(getIdUri(id), values, null, null);
+        int updated = resolver.update(Utils.getIdUri(id), values, null, null);
         assertNotSame(0, updated); // did update smth
 
     }
 
-
-    //TODO move this to Util
-    private Uri getIdUri(int id) {
-        return Uri.withAppendedPath(PostContract.POSTS_URI, Integer.toString(id));
-    }
 
     private void logRecords(Cursor c) {
         while (c.moveToNext()) {

@@ -10,12 +10,12 @@ import android.os.Bundle;
 /**
  * Created by motan on 08.03.2015.
  */
-public class Autheticator extends AbstractAccountAuthenticator {
+public class Authenticator extends AbstractAccountAuthenticator {
 
 
     private Context context;
 
-    public Autheticator(Context context) {
+    public Authenticator(Context context) {
         super(context);
         this.context = context;
     }

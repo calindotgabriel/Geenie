@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/ic_alarm_black_24dp"
+        android:drawableLeft="@drawable/ic_today_black_24dp"
         android:fontFamily="sans-serif-thin"
         android:text="Hour picker" />
 

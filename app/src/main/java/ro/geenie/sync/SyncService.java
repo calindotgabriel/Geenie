@@ -13,7 +13,7 @@ public class SyncService extends Service {
     private final String TAG = getClass().getName();
 
     private static final Object syncAdapterLock = new Object();
-    private static PostSyncAdapter syncAdapter = null;
+    private static SyncAdapter syncAdapter = null;
 
     @Override
     public void onCreate() {
@@ -21,7 +21,7 @@ public class SyncService extends Service {
         Log.i(TAG, "Service created");
         synchronized (syncAdapterLock) {
             if (syncAdapter == null) {
-                syncAdapter = new PostSyncAdapter(getApplicationContext(), true);
+                syncAdapter = new SyncAdapter(getApplicationContext(), true);
             }
         }
     }
@@ -36,12 +36,12 @@ public class SyncService extends Service {
     }
 
     /**
-     * Return Binder handle for IPC communication with {@link PostSyncAdapter}.
+     * Return Binder handle for IPC communication with {@link SyncAdapter}.
      *
      * <p>New sync requests will be sent directly to the PostSyncAdapter using this channel.
      *
      * @param intent Calling intent
-     * @return Binder handle for {@link PostSyncAdapter}
+     * @return Binder handle for {@link SyncAdapter}
      */
     @Override
     public IBinder onBind(Intent intent) {

@@ -31,7 +31,7 @@ public class PostContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        return false;
+        return true;
     }
 
     @Override
