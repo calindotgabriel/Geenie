@@ -42,6 +42,14 @@ public class LoginActivity extends BaseActivity {
 //        LoginTaskParams loginTaskParams = new LoginTaskParams(this, "Eusebiu", "123456");
 //        new LoginAsyncTask().execute(loginTaskParams);
 
+        debugOnly();
+
+    }
+
+    private void debugOnly() {
+        username.setText("ion");
+        password.setText("123456");
+//        goLogin();
     }
 
     @OnClick(R.id.ok_login) void goLogin(){
