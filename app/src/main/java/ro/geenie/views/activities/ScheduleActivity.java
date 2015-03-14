@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
@@ -128,7 +127,6 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF rectF) {
-        Toast.makeText(ScheduleActivity.this, "Clicked " + getEventTitle(event.getStartTime()), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -165,11 +163,12 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
         bundle.putInt("dayOfWeek", event.getStartTime().get(Calendar.DAY_OF_WEEK));
         boolean repeat = false;
         for (WeekViewItemExtended extended : eventsextended) {
-            if (event.equals(extended.getEvent())) {
+
+            if (event.getId() == extended.getEvent().getId()) {
                 repeat = extended.getRepeat();
+
             }
         }
-
         bundle.putBoolean("repeat", repeat);
         NewEventDialog dialog = new NewEventDialog();
         dialog.setArguments(bundle);
@@ -197,12 +196,11 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
                 startTime.set(Calendar.HOUR_OF_DAY, startHour);
                 startTime.set(Calendar.MINUTE, 0);
                 startTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
-                startTime.add(Calendar.SECOND, 1);
                 Calendar endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
                 endTime.set(Calendar.HOUR_OF_DAY, endHour);
-                endTime.set(Calendar.MINUTE, 59);
-                WeekViewEvent childEvent = new WeekViewEvent(0, eventName, startTime, endTime);
+                endTime.add(Calendar.MINUTE, -1);
+                WeekViewEvent childEvent = new WeekViewEvent(parent.getEvent().getId(), eventName, startTime, endTime);
                 childEvent.setColor(parent.getEvent().getColor());
                 WeekViewItemExtended childExtended = new WeekViewItemExtended(childEvent, repeat);
                 allEvents.add(childExtended);
@@ -211,13 +209,13 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
                     Calendar startTime = Calendar.getInstance();
                     startTime.set(Calendar.HOUR_OF_DAY, startHour);
                     startTime.set(Calendar.MINUTE, 0);
-                    startTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+                    startTime.set(Calendar.DAY_OF_WEEK, dayOfWeek - 1);
                     startTime.add(Calendar.DATE, i);
                     startTime.add(Calendar.SECOND, 1);
                     Calendar endTime = (Calendar) startTime.clone();
                     endTime.set(Calendar.HOUR_OF_DAY, endHour);
                     endTime.set(Calendar.MINUTE, 59);
-                    WeekViewEvent childEvent = new WeekViewEvent(0, eventName, startTime, endTime);
+                    WeekViewEvent childEvent = new WeekViewEvent(parent.getEvent().getId(), eventName, startTime, endTime);
                     childEvent.setColor(parent.getEvent().getColor());
                     WeekViewItemExtended childExtended = new WeekViewItemExtended(childEvent, repeat);
                     allEvents.add(childExtended);
@@ -258,8 +256,6 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
         for (int j = 0; j < ta.length(); j++)
             mColors[j] = ta.getColor(j, 0);
         event.setColor(mColors[colorIndex]);
-        //events.add(event);
-
         WeekViewItemExtended extended = new WeekViewItemExtended(event, repeat);
         eventsextended.add(extended);
 

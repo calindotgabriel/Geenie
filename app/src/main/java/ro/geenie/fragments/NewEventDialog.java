@@ -131,6 +131,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
         //RangeBar for start and end hours
 
         rangeBar = (RangeBar) dialog.getCustomView().findViewById(R.id.rangebar);
+        rangeBar.setRangePinsByIndices(startHour, endHour);
         rangeBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int start, int end, String textStart, String textEnd) {
