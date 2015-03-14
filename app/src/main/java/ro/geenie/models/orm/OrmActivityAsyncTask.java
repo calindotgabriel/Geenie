@@ -1,6 +1,6 @@
 package ro.geenie.models.orm;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.AsyncTask;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -10,20 +10,22 @@ import ro.geenie.db.DatabaseHelper;
 /**
  * Created by motan on 28.02.2015.
  */
-public abstract class OrmAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
+public abstract class OrmActivityAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 
-    public Context context;
+    public Activity activity;
     public DatabaseHelper dbHelper;
 
-    public abstract void registerContext(Context context);
+    protected OrmActivityAsyncTask(Activity activity) {
+        this.activity = activity;
+    }
 
-    public Context getContext() {
-        return context;
+    public Activity getActivity() {
+        return activity;
     }
 
     public DatabaseHelper getHelper() {
         if (dbHelper == null) {
-            dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+            dbHelper = OpenHelperManager.getHelper(activity, DatabaseHelper.class);
         }
         return dbHelper;
     }

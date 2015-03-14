@@ -34,7 +34,7 @@
         <item>@drawable/ic_today_black_24dp</item>
         <item>@drawable/ic_people_black_24dp</item>
         <item>@drawable/ic_folder_shared_black_24dp</item>
-        <item>@drawable/ic_alarm_black_24dp</item>
+        <item>@drawable/ic_check_black_24dp</item>
         <item>@drawable/ic_settings_black_24dp</item>
     </array>
 

@@ -11,18 +11,18 @@ import android.widget.TextView;
 import java.util.List;
 
 import ro.geenie.R;
-import ro.geenie.models.DashItem;
+import ro.geenie.models.Post;
 
 public class DashAdapter extends RecyclerView.Adapter<DashAdapter.ViewHolder> {
 
     OnItemClickListener mItemClickListener;
     private Context context;
-    private List<DashItem> dashItems;
+    private List<Post> posts;
     private int itemLayout;
 
-    public DashAdapter(Context context, List<DashItem> hobbies, int itemLayout) {
+    public DashAdapter(Context context, List<Post> hobbies, int itemLayout) {
         this.context = context;
-        this.dashItems = hobbies;
+        this.posts = hobbies;
         this.itemLayout = itemLayout;
 
     }
@@ -35,17 +35,17 @@ public class DashAdapter extends RecyclerView.Adapter<DashAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        DashItem dashItem = dashItems.get(position);
+        Post post = posts.get(position);
 
-        holder.cardName.setText(dashItem.getName());
-        holder.cardText.setText(dashItem.getText());
+        holder.cardName.setText(post.getMemberName());
+        holder.cardText.setText(post.getMessage());
 
     }
 
 
     @Override
     public int getItemCount() {
-        return dashItems.size();
+        return posts.size();
     }
 
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
