@@ -10,6 +10,7 @@ public class AssignmentItem {
     String title;
     int click;
     Calendar calendar;
+    String tag;
 
     public AssignmentItem() {
     }
@@ -20,6 +21,23 @@ public class AssignmentItem {
         this.click = click;
         this.calendar = calendar;
 
+    }
+
+    public AssignmentItem(String title, int click, Calendar calendar, String tag) {
+        this.title = title;
+        this.click = click;
+        this.calendar = calendar;
+        this.tag = tag;
+
+
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public Calendar getCalendar() {

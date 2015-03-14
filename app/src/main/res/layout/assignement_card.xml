@@ -10,11 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <FrameLayout
+            android:id="@+id/tag_color"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent" />
+
         <TextView
             android:id="@+id/assignment_card_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-thin"
             android:text="Examen Matematica"
@@ -25,20 +31,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/assignment_card_title"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:text="Due:"
             android:textSize="20dp" />
 
+        <ImageButton
+            android:id="@+id/remove_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_highlight_remove_grey600_18dp" />
 
-        <Switch
+
+        <com.gc.materialdesign.views.Switch
             android:id="@+id/alarmswitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            android:background="@android:color/transparent"
+
+            android:layout_margin="20dp"
+            android:background="?colorPrimary"
             android:switchMinWidth="50dp" />
 
 

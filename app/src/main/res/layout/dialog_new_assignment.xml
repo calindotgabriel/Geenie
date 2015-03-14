@@ -10,11 +10,20 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_horizontal_margin">
 
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="What you have to be done?"
+        android:textColor="?colorPrimary"
+        android:textSize="20sp" />
+
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/assignment_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:hint="Assignment Name"
         android:textColor="?colorPrimary"
         android:textColorHint="?colorPrimaryDark"
@@ -25,25 +34,57 @@
         app:primaryColor="?colorAccent"
         app:singleLineEllipsis="true" />
 
-    <Button
-        android:id="@+id/datebutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/ic_today_black_24dp"
-        android:fontFamily="sans-serif-thin"
-        android:text="Date picker" />
+    <TextView
 
-    <Button
-        android:id="@+id/hourbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="You could provide also a tag"
+        android:textColor="?colorPrimary"
+        android:textSize="20sp" />
+
+    <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+        android:id="@+id/assignment_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tag"
+        android:textColor="?colorPrimary"
+        android:textColorHint="?colorPrimaryDark"
+        android:textSize="25dp"
+        app:baseColor="?colorPrimary"
+        app:floatingLabel="highlight"
+        app:maxCharacters="30"
+        app:primaryColor="?colorAccent"
+        app:singleLineEllipsis="true" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/ic_alarm_black_24dp"
-        android:fontFamily="sans-serif-thin"
-        android:text="Hour picker" />
+        android:orientation="horizontal">
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/datebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="?colorPrimary"
+            android:fontFamily="sans-serif-thin"
+            android:text="Date picker" />
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/hourbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:background="?colorPrimary"
+            android:fontFamily="sans-serif-thin"
+            android:text="Hour picker" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

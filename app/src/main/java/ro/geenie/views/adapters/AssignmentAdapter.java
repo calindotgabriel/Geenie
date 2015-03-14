@@ -1,14 +1,17 @@
 package ro.geenie.views.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.Switch;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.gc.materialdesign.widgets.SnackBar;
 
 import java.util.Calendar;
 import java.util.List;
@@ -54,16 +57,35 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
             holder.alarmSwitch.setChecked(true);
         }
 
-        holder.alarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.alarmSwitch.setOncheckListener(new com.gc.materialdesign.views.Switch.OnCheckListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
+            public void onCheck(boolean b) {
+                if (b) {
                     ((AssignmentsActivity) context).startAlarm(position, holder.cardTitle.getText().toString(), calendar);
                 } else {
                     ((AssignmentsActivity) context).cancelAlarm(position);
                 }
             }
         });
+
+        holder.removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SnackBar snackBar = new SnackBar((AssignmentsActivity) context, "Surely remove " + holder.cardTitle.getText() + "?", "Indeed", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        assignmentItems.remove(position);
+                        notifyDataSetChanged();
+                    }
+                });
+                snackBar.show();
+            }
+        });
+
+
+        if (assignmentItem.getTag().equals("Matematica")) {
+            holder.tagColor.setBackgroundColor(Color.RED);
+        }
 
 
     }
@@ -89,7 +111,9 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView cardTitle;
         public CardView card;
-        public Switch alarmSwitch;
+        public com.gc.materialdesign.views.Switch alarmSwitch;
+        public ImageButton removeButton;
+        public FrameLayout tagColor;
 
 
         public ViewHolder(final View itemView) {
@@ -97,8 +121,9 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
             card = (CardView) itemView.findViewById(R.id.card_view);
             cardTitle = (TextView) itemView.findViewById(R.id.assignment_card_title);
             itemView.setOnClickListener(this);
-            alarmSwitch = (Switch) itemView.findViewById(R.id.alarmswitch);
-
+            alarmSwitch = (com.gc.materialdesign.views.Switch) itemView.findViewById(R.id.alarmswitch);
+            removeButton = (ImageButton) itemView.findViewById(R.id.remove_button);
+            tagColor = (FrameLayout) itemView.findViewById(R.id.tag_color);
 
         }
 

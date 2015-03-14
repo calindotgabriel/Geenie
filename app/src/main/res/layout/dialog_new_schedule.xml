@@ -15,7 +15,7 @@
         android:id="@+id/event_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:hint="Event Name"
         android:textColor="?colorPrimary"
         android:textColorHint="?colorPrimaryDark"
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="sans-serif"
         android:text="Choose event color"
         android:textColor="?colorPrimary"
@@ -46,7 +46,7 @@
         android:clipToPadding="false"
         android:columnCount="4"
         android:orientation="horizontal"
-        android:paddingBottom="20dp"
+        android:paddingBottom="10dp"
         android:rowCount="2"
         tools:ignore="UselessParent">
 
@@ -208,6 +208,29 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif"
+            android:text="Should this be repeatable?"
+            android:textColor="?colorPrimary"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/repeat_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
