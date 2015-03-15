@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.Spinner;
@@ -41,6 +42,9 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
     GridLayout list;
     Integer colorIndex;
     int dayOfWeek;
+    android.widget.CheckBox repeatCheckbox;
+    boolean repeat;
+
 
     private final MaterialDialog.ButtonCallback mButtonCallback = new MaterialDialog.ButtonCallback() {
         @Override
@@ -52,7 +56,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
             eventName = editEventName.getText().toString();
             if (!eventName.isEmpty()) {
                 if (colorIndex != null) {
-                    mCallback.createEvent(eventName, startHour, endHour, colorIndex, dayOfWeek);
+                    mCallback.createEvent(eventName, startHour, endHour, colorIndex, dayOfWeek, repeat);
                     materialDialog.dismiss();
                 } else {
                     Toast.makeText(getActivity(), "You should give your event a color!", Toast.LENGTH_SHORT).show();
@@ -127,6 +131,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
         //RangeBar for start and end hours
 
         rangeBar = (RangeBar) dialog.getCustomView().findViewById(R.id.rangebar);
+        rangeBar.setRangePinsByIndices(startHour, endHour);
         rangeBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int start, int end, String textStart, String textEnd) {
@@ -192,6 +197,16 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
 
         spinner.setSelection(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1);
 
+        //repeat checkbox
+        repeatCheckbox = (android.widget.CheckBox) dialog.getCustomView().findViewById(R.id.repeat_checkbox);
+
+        repeatCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                repeat = isChecked;
+            }
+        });
+
 
         //Populate every element if editable
 
@@ -213,6 +228,14 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
 
             //spinner
             spinner.setSelection(bundle.getInt("dayOfWeek") - 1);
+
+            //checkbox
+
+            Toast.makeText(getActivity(), Boolean.toString(bundle.getBoolean("repeat")), Toast.LENGTH_SHORT).show();
+            repeatCheckbox.setChecked(bundle.getBoolean("repeat"));
+
+
+
 
         }
 
@@ -252,7 +275,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
 
     public interface scheduleActivityListener {
 
-        public void createEvent(String eventName, int startHour, int endHour, int color, int dayOfWeek);
+        public void createEvent(String eventName, int startHour, int endHour, int color, int dayOfWeek, boolean repeat);
 
         public void deleteEvent(String eventName);
     }

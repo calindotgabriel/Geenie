@@ -39,5 +39,6 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.2.0'
     compile 'com.doomonafireball.betterpickers:library:1.5.3'
     compile 'net.danlew:android.joda:2.7.1'
+    compile 'com.github.navasmdc:MaterialDesign:1.+@aar'
 
 }

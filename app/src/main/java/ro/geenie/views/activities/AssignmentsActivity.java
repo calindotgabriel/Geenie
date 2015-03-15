@@ -73,11 +73,11 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
         fab.attachToRecyclerView(recyclerView);
     }
 
-    public void createAssignment(String assignmentTitle, Calendar calendar) {
-        mockList.add(new AssignmentItem(assignmentTitle, 0, calendar));
+
+    public void createAssignment(String assignmentTitle, Calendar calendar, String assignmentTag) {
+        mockList.add(new AssignmentItem(assignmentTitle, 0, calendar, assignmentTag));
         adapter.notifyDataSetChanged();
     }
-
 
     @OnClick(R.id.fab_new_assignment_item)
     void openDialog() {

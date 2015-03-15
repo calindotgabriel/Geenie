@@ -7,12 +7,14 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.Calendar;
@@ -26,18 +28,29 @@ public class NewAssignmentDialog extends DialogFragment {
 
     assignmentActivityListener mCallback;
     MaterialEditText editAssignmentName;
+    MaterialAutoCompleteTextView editTag;
+    String tagName;
     String assignmentName;
     Calendar assignmentCalendar = Calendar.getInstance();
+
 
     private final MaterialDialog.ButtonCallback mButtonCallback = new MaterialDialog.ButtonCallback() {
         @Override
         public void onPositive(MaterialDialog materialDialog) {
             assignmentName = editAssignmentName.getText().toString();
+            tagName = editTag.getText().toString();
+
             if (!assignmentName.isEmpty()) {
-                mCallback.createAssignment(assignmentName, assignmentCalendar);
-                materialDialog.dismiss();
+                if (!tagName.isEmpty()) {
+                    mCallback.createAssignment(assignmentName, assignmentCalendar, tagName);
+                    materialDialog.dismiss();
+                } else {
+                    Toast.makeText(getActivity(), "Give us a tag, please :D", Toast.LENGTH_SHORT).show();
+                }
+
+
             } else {
-                Toast.makeText(getActivity(), "Please enter a name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "A name here would be extremly handy", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -48,8 +61,8 @@ public class NewAssignmentDialog extends DialogFragment {
         }
     };
 
-    Button datePicker;
-    Button hourPicker;
+    ButtonRectangle datePicker;
+    ButtonRectangle hourPicker;
 
     public NewAssignmentDialog() {
 
@@ -81,6 +94,10 @@ public class NewAssignmentDialog extends DialogFragment {
                 .build();
 
         editAssignmentName = (MaterialEditText) dialog.getCustomView().findViewById(R.id.assignment_title);
+        editTag = (MaterialAutoCompleteTextView) dialog.getCustomView().findViewById(R.id.assignment_tag);
+        String[] tags = {"Matematica", "Informatica", "Romana"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, tags);
+        editTag.setAdapter(adapter);
 
         Calendar mcurrentTime = Calendar.getInstance();
         final int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -90,8 +107,8 @@ public class NewAssignmentDialog extends DialogFragment {
         final int day = mcurrentTime.get(Calendar.DAY_OF_MONTH);
 
 
-        datePicker = (Button) dialog.getCustomView().findViewById(R.id.datebutton);
-        hourPicker = (Button) dialog.getCustomView().findViewById(R.id.hourbutton);
+        datePicker = (ButtonRectangle) dialog.getCustomView().findViewById(R.id.datebutton);
+        hourPicker = (ButtonRectangle) dialog.getCustomView().findViewById(R.id.hourbutton);
 
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,9 +143,6 @@ public class NewAssignmentDialog extends DialogFragment {
         });
 
 
-
-
-
         return dialog;
     }
 
@@ -141,7 +155,8 @@ public class NewAssignmentDialog extends DialogFragment {
 
     public interface assignmentActivityListener {
 
-        public void createAssignment(String assignmentTitle, Calendar calendar);
+
+        public void createAssignment(String assignmentTitle, Calendar calendar, String assignmentTag);
 
     }
 

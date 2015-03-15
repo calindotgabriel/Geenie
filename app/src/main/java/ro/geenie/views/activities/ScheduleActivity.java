@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
@@ -17,14 +16,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ro.geenie.R;
 import ro.geenie.fragments.NewEventDialog;
+import ro.geenie.models.WeekViewItemExtended;
 
 /**
  * Created by loopiezlol on 09.02.2015.
  */
 public class ScheduleActivity extends BaseActivity implements WeekView.MonthChangeListener,
-        WeekView.EventClickListener, WeekView.EventLongPressListener, NewEventDialog.scheduleActivityListener {
+        WeekView.EventClickListener, WeekView.EventLongPressListener, NewEventDialog.scheduleActivityListener, WeekView.EmptyViewLongPressListener {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -32,6 +33,7 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
     private static final int TYPE_WEEK_VIEW = 3;
     List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
     int id = 0;
+    List<WeekViewItemExtended> eventsextended = new ArrayList<>();
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
     private WeekView mWeekView;
@@ -57,13 +59,7 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
 
         mWeekView.setEventLongPressListener(this);
 
-        /*mWeekView.setEmptyViewLongPressListener(new WeekView.EmptyViewLongPressListener() {
-            @Override
-            public void onEmptyViewLongPress(Calendar calendar) {
-
-                new NewEventDialog().show(ScheduleActivity.this);
-            }
-        });*/
+        mWeekView.setEmptyViewLongPressListener(this);
 
         ta = getResources().obtainTypedArray(R.array.colors);
 
@@ -124,10 +120,6 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
                 }
                 return true;
 
-            case R.id.action_new_event:
-                new NewEventDialog().show(ScheduleActivity.this);
-
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -135,9 +127,25 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF rectF) {
-        Toast.makeText(ScheduleActivity.this, "Clicked " + getEventTitle(event.getStartTime()), Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onEmptyViewLongPress(Calendar calendar) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("startHour", calendar.get(Calendar.HOUR_OF_DAY));
+        bundle.putInt("endHour", calendar.get(Calendar.HOUR_OF_DAY) + 1);
+        bundle.putInt("dayOfWeek", calendar.get(Calendar.DAY_OF_WEEK));
+        NewEventDialog dialog = new NewEventDialog();
+        dialog.setArguments(bundle);
+        dialog.show(ScheduleActivity.this);
+
+        //Toast.makeText(this,Integer.toString(calendar.get(Calendar.HOUR_OF_DAY))+ Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)+1),Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.fab_new_assignment_item)
+    void openDialog() {
+        new NewEventDialog().show(ScheduleActivity.this);
+    }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF rectF) {
@@ -153,7 +161,15 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
         }
         bundle.putInt("color", colorIndex);
         bundle.putInt("dayOfWeek", event.getStartTime().get(Calendar.DAY_OF_WEEK));
-        //bundle.putInt("position", events.indexOf(event));
+        boolean repeat = false;
+        for (WeekViewItemExtended extended : eventsextended) {
+
+            if (event.getId() == extended.getEvent().getId()) {
+                repeat = extended.getRepeat();
+
+            }
+        }
+        bundle.putBoolean("repeat", repeat);
         NewEventDialog dialog = new NewEventDialog();
         dialog.setArguments(bundle);
         dialog.show(ScheduleActivity.this);
@@ -162,16 +178,61 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
 
     @Override
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        List<WeekViewEvent> weekViewEvents = new ArrayList<WeekViewEvent>();
 
-        for (WeekViewEvent event : events) {
-            if (event.getStartTime().get(Calendar.MONTH) + 1 == newMonth && event.getStartTime().get(Calendar.YEAR) == newYear) {
-                weekViewEvents.add(event);
+        List<WeekViewEvent> weekViewEvents = new ArrayList<WeekViewEvent>();
+        List<WeekViewItemExtended> allEvents = new ArrayList<>();
+
+
+        for (WeekViewItemExtended parent : eventsextended) {
+
+            int startHour = parent.getEvent().getStartTime().get(Calendar.HOUR_OF_DAY);
+            int dayOfWeek = parent.getEvent().getStartTime().get(Calendar.DAY_OF_WEEK);
+            int endHour = parent.getEvent().getEndTime().get(Calendar.HOUR_OF_DAY);
+            String eventName = parent.getEvent().getName();
+            boolean repeat = parent.getRepeat();
+
+            if (!repeat) {
+                Calendar startTime = Calendar.getInstance();
+                startTime.set(Calendar.HOUR_OF_DAY, startHour);
+                startTime.set(Calendar.MINUTE, 0);
+                startTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+                Calendar endTime = (Calendar) startTime.clone();
+                endTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+                endTime.set(Calendar.HOUR_OF_DAY, endHour);
+                endTime.add(Calendar.MINUTE, -1);
+                WeekViewEvent childEvent = new WeekViewEvent(parent.getEvent().getId(), eventName, startTime, endTime);
+                childEvent.setColor(parent.getEvent().getColor());
+                WeekViewItemExtended childExtended = new WeekViewItemExtended(childEvent, repeat);
+                allEvents.add(childExtended);
+            } else {
+                for (int i = -1000; i <= 1000; i = i + 7) {
+                    Calendar startTime = Calendar.getInstance();
+                    startTime.set(Calendar.HOUR_OF_DAY, startHour);
+                    startTime.set(Calendar.MINUTE, 0);
+                    startTime.set(Calendar.DAY_OF_WEEK, dayOfWeek - 1);
+                    startTime.add(Calendar.DATE, i);
+                    startTime.add(Calendar.SECOND, 1);
+                    Calendar endTime = (Calendar) startTime.clone();
+                    endTime.set(Calendar.HOUR_OF_DAY, endHour);
+                    endTime.set(Calendar.MINUTE, 59);
+                    WeekViewEvent childEvent = new WeekViewEvent(parent.getEvent().getId(), eventName, startTime, endTime);
+                    childEvent.setColor(parent.getEvent().getColor());
+                    WeekViewItemExtended childExtended = new WeekViewItemExtended(childEvent, repeat);
+                    allEvents.add(childExtended);
+                }
+            }
+
+
+        }
+
+        for (WeekViewItemExtended event : allEvents) {
+            if (event.getEvent().getStartTime().get(Calendar.MONTH) == newMonth && event.getEvent().getStartTime().get(Calendar.YEAR) == newYear) {
+                weekViewEvents.add(event.getEvent());
             }
         }
 
-
         return weekViewEvents;
+
 
     }
 
@@ -180,42 +241,23 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
 
     }
 
-    public void createEvent(String eventName, int startHour, int endHour, int colorIndex, int dayOfWeek) {
+    public void createEvent(String eventName, int startHour, int endHour, int colorIndex, int dayOfWeek, boolean repeat) {
 
-        for (int i = 0; i <= 1000; i = i + 7) {
-            Calendar startTime = Calendar.getInstance();
-            startTime.set(Calendar.HOUR_OF_DAY, startHour);
-            startTime.set(Calendar.MINUTE, 0);
-            startTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
-            startTime.add(Calendar.DATE, i);
-            Calendar endTime = (Calendar) startTime.clone();
-            endTime.set(Calendar.HOUR_OF_DAY, endHour);
-            endTime.add(Calendar.SECOND, -1);
-            WeekViewEvent event = new WeekViewEvent(id++, eventName, startTime, endTime);
-            int[] mColors = new int[ta.length()];
-            for (int j = 0; j < ta.length(); j++)
-                mColors[j] = ta.getColor(j, 0);
-            event.setColor(mColors[colorIndex]);
-            events.add(event);
-        }
 
-        for (int i = -7; i >= -1000; i = i - 7) {
-            Calendar startTime = Calendar.getInstance();
-            startTime.set(Calendar.HOUR_OF_DAY, startHour);
-            startTime.set(Calendar.MINUTE, 0);
-            startTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
-            startTime.add(Calendar.DATE, i);
-            Calendar endTime = (Calendar) startTime.clone();
-            endTime.set(Calendar.HOUR_OF_DAY, endHour);
-            endTime.add(Calendar.SECOND, -1);
-            WeekViewEvent event = new WeekViewEvent(id++, eventName, startTime, endTime);
-            int[] mColors = new int[ta.length()];
-            for (int j = 0; j < ta.length(); j++)
-                mColors[j] = ta.getColor(j, 0);
-            event.setColor(mColors[colorIndex]);
-            events.add(event);
-        }
-
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(Calendar.HOUR_OF_DAY, startHour);
+        startTime.set(Calendar.MINUTE, 0);
+        startTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+        //startTime.add(Calendar.MILLISECOND,1);
+        Calendar endTime = (Calendar) startTime.clone();
+        endTime.set(Calendar.HOUR_OF_DAY, endHour);
+        WeekViewEvent event = new WeekViewEvent(id++, eventName, startTime, endTime);
+        int[] mColors = new int[ta.length()];
+        for (int j = 0; j < ta.length(); j++)
+            mColors[j] = ta.getColor(j, 0);
+        event.setColor(mColors[colorIndex]);
+        WeekViewItemExtended extended = new WeekViewItemExtended(event, repeat);
+        eventsextended.add(extended);
 
         mWeekView.notifyDatasetChanged();
 
@@ -223,16 +265,18 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
     }
 
     public void deleteEvent(String eventName) {
-        Iterator<WeekViewEvent> iter = events.iterator();
+        Iterator<WeekViewItemExtended> iter = eventsextended.iterator();
         while (iter.hasNext()) {
-            WeekViewEvent event = iter.next();
-            if (event.getName().equals(eventName)) {
+            WeekViewItemExtended event = iter.next();
+            if (event.getEvent().getName().equals(eventName)) {
                 iter.remove();
             }
         }
 
         mWeekView.notifyDatasetChanged();
     }
+
+
 }
 
 
