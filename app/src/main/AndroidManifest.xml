@@ -9,18 +9,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        
-        <receiver android:name=".util.AlarmReceiver" />
-
-        <service
-            android:name="ro.geenie.auth.AuthenticatorService">
-            <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator"/>
-            </intent-filter>
-            <meta-data
-                android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
-        </service>
 
         <activity
             android:name=".views.activities.DashActivity"
@@ -36,6 +24,27 @@
         <activity android:name=".views.activities.ScheduleActivity" />
         <activity android:name=".views.activities.AssignmentsActivity" />
 
+        <provider
+            android:name=".provider.PostContentProvider"
+            android:authorities="ro.geenie.provider.PostContentProvider"
+            android:exported="false"
+            android:syncable="true"
+        />
+
+        <receiver android:name=".util.AlarmReceiver" />
+
+        <service
+            android:name="ro.geenie.auth.AuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
     </application>
+
+
 
 </manifest>
