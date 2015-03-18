@@ -23,13 +23,14 @@ import ro.geenie.models.Member;
 import ro.geenie.models.Post;
 import ro.geenie.models.exception.NoOwnerException;
 import ro.geenie.models.orm.OrmActivity;
-import ro.geenie.network.DbPostsAsyncTask;
+import ro.geenie.sync.SyncUtils;
 import ro.geenie.util.Utils;
 import ro.geenie.views.adapters.DashAdapter;
 
 /**
  */
-public class DashActivity extends OrmActivity {
+public class DashActivity extends OrmActivity
+            {
 
 
     private String[] navMenuTitles;
@@ -50,8 +51,9 @@ public class DashActivity extends OrmActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash);
         ButterKnife.inject(this);
-
         initDrawer();
+
+        SyncUtils.CreateSyncAccount(this);
 
         contentResolver = getContentResolver();
 
@@ -63,12 +65,14 @@ public class DashActivity extends OrmActivity {
             Utils.toastLog(this, e.getMessage());
         }
 
-        DbPostsAsyncTask dbPostsAsyncTask = new DbPostsAsyncTask(this);
-        dbPostsAsyncTask.execute();
+        SyncUtils.TriggerRefresh();
 
-        posts = getHelper().getPostRuntimeDao().queryForAll();
+        posts.add(new Post(1, "Dummy", "Dummy Text"));
         initView(posts, R.id.dash_recycler_view, R.layout.dash_card);
     }
+
+
+
 
     public void initView(List<Post> items, int recyclerViewId, int itemLayout) {
         DashAdapter adapter = new DashAdapter(this, items, itemLayout);
