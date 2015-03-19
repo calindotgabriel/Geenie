@@ -24,7 +24,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import ro.geenie.R;
 import ro.geenie.fragments.NewAssignmentDialog;
-import ro.geenie.models.AssignmentItem;
+import ro.geenie.models.Assignment;
 import ro.geenie.util.AlarmReceiver;
 import ro.geenie.views.adapters.AssignmentAdapter;
 
@@ -32,7 +32,7 @@ import ro.geenie.views.adapters.AssignmentAdapter;
 public class AssignmentsActivity extends BaseActivity implements NewAssignmentDialog.assignmentActivityListener {
 
     public RecyclerView recyclerView;
-    public List<AssignmentItem> mockList = new ArrayList<AssignmentItem>();
+    public List<Assignment> mockList = new ArrayList<>();
     @InjectView(R.id.fab_new_assignment_item)
     FloatingActionButton fab;
     private String[] navMenuTitles;
@@ -65,7 +65,7 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
         set(navMenuTitles, navMenuIcons);
     }
 
-    public void initView(List<AssignmentItem> items, int list, int item) {
+    public void initView(List<Assignment> items, int list, int item) {
         adapter = new AssignmentAdapter(this, items, item);
         recyclerView = (RecyclerView) findViewById(list);
         recyclerView.setHasFixedSize(true);
@@ -79,7 +79,7 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
 
 
     public void createAssignment(String assignmentTitle, Calendar calendar, String assignmentTag) {
-        mockList.add(new AssignmentItem(assignmentTitle, 0, calendar, assignmentTag));
+        mockList.add(new Assignment(assignmentTitle, 0, calendar, assignmentTag));
         adapter.notifyDataSetChanged();
         changeVisibility();
     }

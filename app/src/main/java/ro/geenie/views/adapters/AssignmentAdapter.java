@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import ro.geenie.R;
-import ro.geenie.models.AssignmentItem;
+import ro.geenie.models.Assignment;
 import ro.geenie.views.activities.AssignmentsActivity;
 
 /**
@@ -29,12 +29,12 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
     OnItemClickListener mItemClickListener;
     private Context context;
-    private List<AssignmentItem> assignmentItems;
+    private List<Assignment> assignments;
     private int itemLayout;
 
-    public AssignmentAdapter(Context context, List<AssignmentItem> assignments, int itemLayout) {
+    public AssignmentAdapter(Context context, List<Assignment> assignments, int itemLayout) {
         this.context = context;
-        this.assignmentItems = assignments;
+        this.assignments = assignments;
         this.itemLayout = itemLayout;
 
     }
@@ -47,11 +47,11 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        AssignmentItem assignmentItem = assignmentItems.get(position);
-        holder.cardTitle.setText(assignmentItem.getTitle());
+        Assignment assignment = assignments.get(position);
+        holder.cardTitle.setText(assignment.getTitle());
 
-        int click = assignmentItem.getClick();
-        final Calendar calendar = assignmentItem.getCalendar();
+        int click = assignment.getClick();
+        final Calendar calendar = assignment.getCalendar();
         if (click == 0) {
             holder.alarmSwitch.setChecked(false);
         } else {
@@ -77,7 +77,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
                 SnackBar snackBar = new SnackBar((AssignmentsActivity) context, "Surely remove " + holder.cardTitle.getText() + "?", "Indeed", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        assignmentItems.remove(position);
+                        assignments.remove(position);
                         ((AssignmentsActivity) context).changeVisibility();
                         notifyDataSetChanged();
                     }
@@ -87,7 +87,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
         });
 
 
-        if (assignmentItem.getTag().equals("Matematica")) {
+        if (assignment.getTag().equals("Matematica")) {
             holder.tagColor.setBackgroundColor(Color.RED);
         }
 
@@ -97,7 +97,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return assignmentItems.size();
+        return assignments.size();
     }
 
 
