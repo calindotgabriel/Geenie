@@ -8,13 +8,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import ro.geenie.auth.AuthenticatorService;
+import ro.geenie.provider.PostContract;
 
 /**
  * Created by motan on 08.03.2015.
  */
 public class SyncUtils {
 
-    private static final String CONTENT_AUTHORITY = "ro.geenie.provider.PostContentProvider";
+    private static final String CONTENT_AUTHORITY = PostContract.AUTHORITY;
     private static final String PREF_SETUP_COMPLETE = "setup_complete";
     public static final String ACCOUNT_TYPE = "ro.geenie.sync";
     private static final long SYNC_FREQUENCY = 60 * 60 * 4;  // every 4 hours (in seconds)

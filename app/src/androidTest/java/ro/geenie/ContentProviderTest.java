@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.test.ApplicationTestCase;
 import android.util.Log;
 
+import ro.geenie.models.Post;
 import ro.geenie.provider.PostContract;
 import ro.geenie.util.Utils;
 
@@ -20,9 +21,9 @@ public class ContentProviderTest extends ApplicationTestCase<Application> {
 
     public static final String TAG = "ContentProviderTest";
     public static final Uri POSTS_ROUTE = PostContract.POSTS_URI;
-    public static final String KEY_ID = "id";
-    public static final String KEY_NAME = "name";
-    public static final String KEY_TEXT = "text";
+    public static final String KEY_ID = Post.KEY_ID;
+    public static final String KEY_NAME = Post.KEY_NAME;
+    public static final String KEY_TEXT = Post.KEY_TEXT;
 
     public ContentProviderTest() {
         super(Application.class);
@@ -85,6 +86,44 @@ public class ContentProviderTest extends ApplicationTestCase<Application> {
 
         int updated = resolver.update(Utils.getIdUri(id), values, null, null);
         assertNotSame(0, updated); // did update smth
+
+    }
+
+    public void testCycle() {
+        int count = getCurrentCount();
+
+        ContentValues values = new ContentValues();
+        int id = count + 1; // insert at next position ( normally auto-generated )
+        values.put(KEY_ID, id);
+        values.put(KEY_NAME, "ion");
+        values.put(KEY_TEXT, "am boala pamantului");
+        Uri uri = resolver.insert(POSTS_ROUTE, values);
+
+        Uri expected_uri = Utils.getIdUri(id);
+        assertEquals(expected_uri, uri);
+        assertEquals(getCurrentCount(), count + 1);
+
+        int idToBeModified = count + 1;
+        values.put(KEY_NAME, "ionutz likid");
+        values.put(KEY_TEXT, "cee face baba ?");
+
+        int updated = resolver.update(Utils.getIdUri(id), values, null, null);
+        assertNotSame(0, updated); // did update smth
+
+        Cursor c = resolver.query(
+                Uri.withAppendedPath(POSTS_ROUTE, Integer.toString(idToBeModified)),
+                null,
+                null,
+                null,
+                null
+        );
+        assertNotNull(c);
+
+        c.moveToNext();
+        String updated_name = c.getString(c.getColumnIndex(KEY_NAME));
+        assertEquals(updated_name, "ionutz likid");
+
+
 
     }
 

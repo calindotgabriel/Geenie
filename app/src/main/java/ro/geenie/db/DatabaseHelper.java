@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.CloseableIterator;
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -23,9 +22,7 @@ import ro.geenie.models.exception.NoOwnerException;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     public static final String DATABASE_NAME = "geenielocal.db";
-    public static final int DATABASE_VERSION = 5;
-
-    private Dao<Member, Integer> memberDao = null;
+    public static final int DATABASE_VERSION = 9;
 
     private RuntimeExceptionDao<Member, Integer> memberRuntimeDao = null;
     private RuntimeExceptionDao<Post, Integer> postRuntimeDao = null;
@@ -39,7 +36,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.createTable(connectionSource, Member.class);
             TableUtils.createTable(connectionSource, Post.class);
-
         } catch (Exception e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -58,21 +54,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public Dao<Member, Integer> getMemberDao() throws SQLException {
-        if (memberDao == null) {
-            memberDao = getDao(Member.class);
-        }
-        return memberDao;
-    }
 
-    public RuntimeExceptionDao<Member, Integer> getMemberRuntimeDao() {
+
+    public RuntimeExceptionDao<Member, Integer> getMemberDao() {
         if (memberRuntimeDao == null) {
             memberRuntimeDao = getRuntimeExceptionDao(Member.class);
         }
         return memberRuntimeDao;
     }
 
-    public RuntimeExceptionDao<Post, Integer> getPostRuntimeDao() {
+    public RuntimeExceptionDao<Post, Integer> getPostDao() {
         if (postRuntimeDao == null) {
             postRuntimeDao = getRuntimeExceptionDao(Post.class);
         }
@@ -82,7 +73,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close() {
         super.close();
-        memberDao = null;
         memberRuntimeDao = null;
         postRuntimeDao = null;
     }
@@ -94,7 +84,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     //TODO move to MemberProvider
     public Member getOwner() throws SQLException, NoOwnerException {
         CloseableIterator<Member> iterator =
-                getMemberRuntimeDao().closeableIterator();
+                getMemberDao().closeableIterator();
         try {
             while (iterator.hasNext()) {
                 Member member = iterator.next();

@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".views.activities.DashActivity"
+            android:name=".views.activities.LoginActivity"
             android:label="@string/app_name" >
              <intent-filter>
              <action android:name="android.intent.action.MAIN" />
@@ -25,14 +25,15 @@
              </intent-filter>
         </activity>
 
-        <!--<activity android:name=".views.activities.DashActivity"/>-->
+        <activity android:name=".views.activities.DashActivity"/>
         <activity android:name=".views.activities.SignUpActivity" />
         <activity android:name=".views.activities.ScheduleActivity" />
         <activity android:name=".views.activities.AssignmentsActivity" />
+        <activity android:name=".views.activities.MembersActivity"/>
 
         <provider
             android:name=".provider.PostContentProvider"
-            android:authorities="ro.geenie.provider.PostContentProvider"
+            android:authorities="ro.geenie.sync.SyncAdapter"
             android:exported="false"
             android:syncable="true"
         />

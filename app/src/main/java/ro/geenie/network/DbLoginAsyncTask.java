@@ -35,7 +35,6 @@ public class DbLoginAsyncTask extends OrmContextAsyncTask<LoginTaskParams, Strin
         final String lUsername = params[0].name;
         final String lPassword = params[0].password;
 
-
         try {
             checkLoginInfo(lUsername, lPassword);
 
@@ -70,8 +69,8 @@ public class DbLoginAsyncTask extends OrmContextAsyncTask<LoginTaskParams, Strin
     }
 
     private void registerOwner(String lUsername) {
-        owner = new Member(lUsername, false, true);
-        RuntimeExceptionDao<Member, Integer> dao = getHelper().getMemberRuntimeDao();
+//        owner = new Member(lUsername, false, true);
+        RuntimeExceptionDao<Member, Integer> dao = getHelper().getMemberDao();
         dao.createOrUpdate(owner);
     }
 

@@ -5,6 +5,9 @@ package ro.geenie.models.exception;
  */
 public class NoOwnerException extends Exception {
 
+    public NoOwnerException() {
+    }
+
     public NoOwnerException(String detailMessage) {
         super(detailMessage);
     }

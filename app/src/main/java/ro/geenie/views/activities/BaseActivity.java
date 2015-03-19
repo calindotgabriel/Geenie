@@ -150,9 +150,9 @@ public class BaseActivity extends ActionBarActivity {
                 break;
 
             case 2:
-                //intent = new Intent(this,MembersActivity.class);
-                //startActivity(intent);
-                //finish();
+                intent = new Intent(this,MembersActivity.class);
+                startActivity(intent);
+                finish();
                 break;
 
             case 3:
