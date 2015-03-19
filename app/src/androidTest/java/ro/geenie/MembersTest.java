@@ -24,6 +24,7 @@ public class MembersTest extends ApplicationTestCase<Application> {
     }
 
     public void testMembers() {
+        getHelper().getMemberDao().createOrUpdate(new Member(1, "ion", true));
         getHelper().getMemberDao().createOrUpdate(new Member(2, "gabi"));
         getHelper().getMemberDao().createOrUpdate(new Member(3, "rodrigo"));
         getHelper().getMemberDao().createOrUpdate(new Member(4, "esteban"));
@@ -33,6 +34,7 @@ public class MembersTest extends ApplicationTestCase<Application> {
             Log.d(TAG, "found user: " + m.getId() + " / " + m.getName());
         }
         releaseHelper();
+
     }
 
 

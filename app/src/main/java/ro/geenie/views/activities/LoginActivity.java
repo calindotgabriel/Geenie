@@ -31,11 +31,11 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ownerController = new LocalOwnerController(this);
-        if (ownerController.isOwnerRegistered()) {
-            Intent intent = new Intent(LoginActivity.this, DashActivity.class);
-            startActivity(intent);
-        }
+//        ownerController = new LocalOwnerController(this);
+//        if (ownerController.isOwnerRegistered()) {
+//            Intent intent = new Intent(LoginActivity.this, DashActivity.class);
+//            startActivity(intent);
+//        }
 
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
@@ -61,7 +61,9 @@ public class LoginActivity extends Activity {
         MemberController memberController = new MemberController(this);
         try {
             if (memberController.isMemberValid(enteredName)) {
-                ownerController.registerLocalOwner(enteredName);
+//                ownerController.registerLocalOwner(enteredName);
+            Intent intent = new Intent(LoginActivity.this, DashActivity.class);
+            startActivity(intent);
             }
         } catch (MemberProviderException e) {
             Utils.toastLog(this, e.getMessage());
