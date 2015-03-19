@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ro.geenie" >
+    package="ro.geenie">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,31 +12,32 @@
 
         <activity
             android:name=".views.activities.DashActivity"
-            android:label="@string/app_name" >
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!--<activity android:name=".views.activities.DashActivity"/>-->
         <activity android:name=".views.activities.SignUpActivity" />
         <activity android:name=".views.activities.ScheduleActivity" />
         <activity android:name=".views.activities.AssignmentsActivity" />
+        <activity android:name=".views.activities.FilesActivity" />
+        <activity android:name=".views.activities.SettingsActivity" />
+        <activity android:name=".views.activities.MembersActivity" />
 
         <provider
             android:name=".provider.PostContentProvider"
             android:authorities="ro.geenie.provider.PostContentProvider"
             android:exported="false"
-            android:syncable="true"
-        />
+            android:syncable="true" />
 
         <receiver android:name=".util.AlarmReceiver" />
 
-        <service
-            android:name="ro.geenie.auth.AuthenticatorService">
+        <service android:name="ro.geenie.auth.AuthenticatorService">
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator"/>
+                <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
@@ -44,7 +45,6 @@
         </service>
 
     </application>
-
 
 
 </manifest>

@@ -10,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -49,8 +50,11 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
 
         initDrawer();
 
+        getSupportActionBar().setTitle("Assignments");
+
         initView(mockList, R.id.assignment_recycler_view, R.layout.assignement_card);
 
+        changeVisibility();
     }
 
 
@@ -77,6 +81,7 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
     public void createAssignment(String assignmentTitle, Calendar calendar, String assignmentTag) {
         mockList.add(new AssignmentItem(assignmentTitle, 0, calendar, assignmentTag));
         adapter.notifyDataSetChanged();
+        changeVisibility();
     }
 
     @OnClick(R.id.fab_new_assignment_item)
@@ -102,6 +107,18 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
             Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void changeVisibility() {
+        if (adapter.getItemCount() == 0) {
+            recyclerView.setVisibility(View.INVISIBLE);
+            TextView text = (TextView) findViewById(R.id.text_empty);
+            text.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            TextView text = (TextView) findViewById(R.id.text_empty);
+            text.setVisibility(View.INVISIBLE);
+        }
     }
 
 

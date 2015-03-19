@@ -29,13 +29,21 @@
         <item>Assignments</item>
         <item>Settings</item>
     </string-array>
-    <array name="nav_drawer_icons">
-        <item>@drawable/ic_school_black_24dp</item>
+    <array name="nav_drawer_icons_black">
+    <item>@drawable/ic_school_black_24dp</item>
         <item>@drawable/ic_today_black_24dp</item>
         <item>@drawable/ic_people_black_24dp</item>
         <item>@drawable/ic_folder_shared_black_24dp</item>
         <item>@drawable/ic_check_black_24dp</item>
         <item>@drawable/ic_settings_black_24dp</item>
+    </array>
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_school_grey600_36dp</item>
+        <item>@drawable/ic_today_grey600_36dp</item>
+        <item>@drawable/ic_people_grey600_36dp</item>
+        <item>@drawable/ic_folder_shared_grey600_36dp</item>
+        <item>@drawable/ic_check_grey600_36dp</item>
+        <item>@drawable/ic_settings_grey600_36dp</item>
     </array>
 
 

@@ -141,37 +141,42 @@ public class BaseActivity extends ActionBarActivity {
                 intent = new Intent(this, DashActivity.class);
                 startActivity(intent);
                 finish();
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             case 1:
                 intent = new Intent(this, ScheduleActivity.class);
                 startActivity(intent);
                 finish();
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             case 2:
-                //intent = new Intent(this,MembersActivity.class);
-                //startActivity(intent);
-                //finish();
+                intent = new Intent(this, MembersActivity.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             case 3:
-                /*intent = new Intent(this,FilesActivity.class);
+                intent = new Intent(this, FilesActivity.class);
                 startActivity(intent);
-                finish();*/
+                finish();
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             case 4:
                 intent = new Intent(this, AssignmentsActivity.class);
                 startActivity(intent);
                 finish();
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             case 5:
-                /*intent = new Intent(this,SettingsActivity.class);
+                intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
-                finish()*/
-                ;
+                finish();
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             default:
@@ -207,6 +212,16 @@ public class BaseActivity extends ActionBarActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!mDrawerLayout.isDrawerOpen(mDrawer)) {
+            mDrawerLayout.openDrawer(mDrawer);
+        } else {
+            BaseActivity.super.onBackPressed();
+        }
+
     }
 
     private class SlideMenuClickListener implements

@@ -32,18 +32,15 @@ import ro.geenie.views.adapters.DashAdapter;
 public class DashActivity extends OrmActivity {
 
 
-    private String[] navMenuTitles;
-    private TypedArray navMenuIcons;
-    private List<Post> posts = new ArrayList<Post>();
-
-    private String ownerName;
-
     @InjectView(R.id.dash_recycler_view)
     RecyclerView recyclerView;
     @InjectView(R.id.fab_new_dash_item)
     FloatingActionButton fab;
-
     ContentResolver contentResolver;
+    private String[] navMenuTitles;
+    private TypedArray navMenuIcons;
+    private List<Post> posts = new ArrayList<Post>();
+    private String ownerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +49,8 @@ public class DashActivity extends OrmActivity {
         ButterKnife.inject(this);
 
         initDrawer();
+
+        getSupportActionBar().setTitle("You dash");
 
         contentResolver = getContentResolver();
 

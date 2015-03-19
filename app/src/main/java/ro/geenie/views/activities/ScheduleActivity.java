@@ -42,7 +42,8 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.schedule_layout);
+        super.onResume();
+        setContentView(R.layout.activity_schedule);
         ButterKnife.inject(this);
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
 
@@ -50,6 +51,8 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
                 .obtainTypedArray(R.array.nav_drawer_icons);//load icons from strings.xml
 
         set(navMenuTitles, navMenuIcons);
+
+        getSupportActionBar().setTitle("Schedule");
 
         mWeekView = (WeekView) findViewById(R.id.weekView);
 
@@ -64,8 +67,8 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
         ta = getResources().obtainTypedArray(R.array.colors);
 
         mWeekView.goToHour(7);
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

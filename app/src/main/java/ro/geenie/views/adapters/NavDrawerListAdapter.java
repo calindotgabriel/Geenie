@@ -2,6 +2,7 @@ package ro.geenie.views.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class NavDrawerListAdapter extends BaseAdapter {
 
 
         imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
+        imgIcon.setColorFilter(0xffcccccc, PorterDuff.Mode.MULTIPLY);
         txtTitle.setText(navDrawerItems.get(position).getTitle());
 
 

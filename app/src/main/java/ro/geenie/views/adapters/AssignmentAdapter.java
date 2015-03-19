@@ -7,8 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.gc.materialdesign.widgets.SnackBar;
@@ -57,10 +59,11 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
             holder.alarmSwitch.setChecked(true);
         }
 
-        holder.alarmSwitch.setOncheckListener(new com.gc.materialdesign.views.Switch.OnCheckListener() {
+
+        holder.alarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheck(boolean b) {
-                if (b) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
                     ((AssignmentsActivity) context).startAlarm(position, holder.cardTitle.getText().toString(), calendar);
                 } else {
                     ((AssignmentsActivity) context).cancelAlarm(position);
@@ -75,6 +78,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
                     @Override
                     public void onClick(View v) {
                         assignmentItems.remove(position);
+                        ((AssignmentsActivity) context).changeVisibility();
                         notifyDataSetChanged();
                     }
                 });
@@ -111,7 +115,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView cardTitle;
         public CardView card;
-        public com.gc.materialdesign.views.Switch alarmSwitch;
+        public Switch alarmSwitch;
         public ImageButton removeButton;
         public FrameLayout tagColor;
 
@@ -121,7 +125,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
             card = (CardView) itemView.findViewById(R.id.card_view);
             cardTitle = (TextView) itemView.findViewById(R.id.assignment_card_title);
             itemView.setOnClickListener(this);
-            alarmSwitch = (com.gc.materialdesign.views.Switch) itemView.findViewById(R.id.alarmswitch);
+            alarmSwitch = (Switch) itemView.findViewById(R.id.alarmswitch);
             removeButton = (ImageButton) itemView.findViewById(R.id.remove_button);
             tagColor = (FrameLayout) itemView.findViewById(R.id.tag_color);
 
