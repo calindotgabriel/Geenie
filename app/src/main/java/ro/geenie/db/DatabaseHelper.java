@@ -5,16 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
-import com.j256.ormlite.dao.CloseableIterator;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
-import java.sql.SQLException;
-
+import ro.geenie.models.Assignment;
+import ro.geenie.models.Event;
 import ro.geenie.models.Member;
 import ro.geenie.models.Post;
-import ro.geenie.models.exception.NoOwnerException;
 
 /**
  * Created by motan on 10.01.2015.
@@ -22,10 +20,12 @@ import ro.geenie.models.exception.NoOwnerException;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     public static final String DATABASE_NAME = "geenielocal.db";
-    public static final int DATABASE_VERSION = 9;
+    public static final int DATABASE_VERSION = 11;
 
     private RuntimeExceptionDao<Member, Integer> memberRuntimeDao = null;
     private RuntimeExceptionDao<Post, Integer> postRuntimeDao = null;
+    private RuntimeExceptionDao<Assignment, Integer> assignmentRuntimeDao = null;
+    private RuntimeExceptionDao<Event, Integer> eventRuntimeDao = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -36,6 +36,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.createTable(connectionSource, Member.class);
             TableUtils.createTable(connectionSource, Post.class);
+            TableUtils.createTable(connectionSource, Assignment.class);
+            TableUtils.createTable(connectionSource, Event.class);
         } catch (Exception e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -47,6 +49,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.dropTable(connectionSource, Member.class, true);
             TableUtils.dropTable(connectionSource, Post.class, true);
+            TableUtils.dropTable(connectionSource, Assignment.class, true);
+            TableUtils.dropTable(connectionSource, Event.class, true);
             onCreate(database, connectionSource);
         } catch (Exception e) {
             Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
@@ -70,31 +74,27 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return postRuntimeDao;
     }
 
+    public RuntimeExceptionDao<Assignment, Integer> getAssignmentDao() {
+        if (assignmentRuntimeDao == null) {
+            assignmentRuntimeDao = getRuntimeExceptionDao(Assignment.class);
+        }
+        return assignmentRuntimeDao;
+    }
+
+    public RuntimeExceptionDao<Event, Integer> getEventDao() {
+        if (eventRuntimeDao == null) {
+            eventRuntimeDao = getRuntimeExceptionDao(Event.class);
+        }
+        return eventRuntimeDao;
+    }
+
     @Override
     public void close() {
         super.close();
         memberRuntimeDao = null;
         postRuntimeDao = null;
+        assignmentRuntimeDao = null;
+        eventRuntimeDao = null;
     }
 
-    /**
-     * Gets the owner (logged in user)
-     * @throws java.sql.SQLException
-     */
-    //TODO move to MemberProvider
-    public Member getOwner() throws SQLException, NoOwnerException {
-        CloseableIterator<Member> iterator =
-                getMemberDao().closeableIterator();
-        try {
-            while (iterator.hasNext()) {
-                Member member = iterator.next();
-                if (member.isOwner()) {
-                    return member;
-                }
-            }
-        } finally {
-            iterator.close();
-        }
-        throw new NoOwnerException("Found no owner in db.");
-    }
 }

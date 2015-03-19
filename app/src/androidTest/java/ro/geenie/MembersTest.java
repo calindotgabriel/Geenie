@@ -24,13 +24,13 @@ public class MembersTest extends ApplicationTestCase<Application> {
     }
 
     public void testMembers() {
-        getHelper().getMemberDao().createOrUpdate(new Member(1, "ion", true, true));
-        getHelper().getMemberDao().createOrUpdate(new Member(2, "gabi", true, true));
-        getHelper().getMemberDao().createOrUpdate(new Member(3, "ibag", true, true));
+        getHelper().getMemberDao().createOrUpdate(new Member(2, "gabi"));
+        getHelper().getMemberDao().createOrUpdate(new Member(3, "rodrigo"));
+        getHelper().getMemberDao().createOrUpdate(new Member(4, "esteban"));
 
         List<Member> members = getHelper().getMemberDao().queryForAll();
         for (Member m : members) {
-            Log.d(TAG, "found user: " + m.getName());
+            Log.d(TAG, "found user: " + m.getId() + " / " + m.getName());
         }
         releaseHelper();
     }

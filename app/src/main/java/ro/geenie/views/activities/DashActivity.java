@@ -56,7 +56,7 @@ public class DashActivity extends OrmActivity {
 
 
 
-    public void initView(List<Item> items) {
+    private void initView(List<Item> items) {
         adapter = new CardAdapter(this, items);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
