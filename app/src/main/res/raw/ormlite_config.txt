@@ -1,5 +1,5 @@
 #
-# generated on 2015/03/02 03:36:45
+# generated on 2015/03/19 05:29:18
 #
 # --table-start--
 dataClass=ro.geenie.models.Member
@@ -7,16 +7,15 @@ tableName=members
 # --table-fields-start--
 # --field-start--
 fieldName=id
-generatedId=true
+id=true
 # --field-end--
 # --field-start--
 fieldName=user
-# --field-end--
-# --field-start--
-fieldName=isAdmin
+columnName=user
 # --field-end--
 # --field-start--
 fieldName=isOwner
+columnName=owner
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -27,13 +26,63 @@ tableName=posts
 # --table-fields-start--
 # --field-start--
 fieldName=id
+columnName=_id
 id=true
+# --field-end--
+# --field-start--
+fieldName=name
+columnDefinition=name
+# --field-end--
+# --field-start--
+fieldName=text
+columnDefinition=text
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=ro.geenie.models.Assignment
+tableName=assignments
+# --table-fields-start--
+# --field-start--
+fieldName=title
+# --field-end--
+# --field-start--
+fieldName=click
+# --field-end--
+# --field-start--
+fieldName=calendar
+dataPersister=SERIALIZABLE
+# --field-end--
+# --field-start--
+fieldName=tag
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=ro.geenie.models.Event
+tableName=events
+# --table-fields-start--
+# --field-start--
+fieldName=libraryId
+# --field-end--
+# --field-start--
+fieldName=startTime
+dataPersister=SERIALIZABLE
+# --field-end--
+# --field-start--
+fieldName=endTime
+dataPersister=SERIALIZABLE
 # --field-end--
 # --field-start--
 fieldName=name
 # --field-end--
 # --field-start--
-fieldName=text
+fieldName=color
+# --field-end--
+# --field-start--
+fieldName=repeat
 # --field-end--
 # --table-fields-end--
 # --table-end--

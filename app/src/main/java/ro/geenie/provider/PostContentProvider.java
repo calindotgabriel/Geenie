@@ -11,6 +11,7 @@ import android.net.Uri;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import ro.geenie.db.DatabaseHelper;
+import ro.geenie.models.Post;
 
 /**
  * Created by motan on 09.03.2015.
@@ -49,10 +50,16 @@ public class PostContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         Cursor c = null;
+        SQLiteDatabase db = getHelper().getReadableDatabase();
         switch (uriMatcher.match(uri)) {
             case ROUTE_POSTS:
-                SQLiteDatabase db = getHelper().getReadableDatabase();
                 c = db.rawQuery("SELECT * FROM " + PostContract.TABLE_NAME, null);
+                break;
+            case ROUTE_POST:
+                String id = uri.getLastPathSegment();
+                c = db.rawQuery("SELECT * FROM " + PostContract.TABLE_NAME +
+                                " WHERE " + Post.KEY_ID + " = " + id, null);
+                break;
         }
         return c;
     }
@@ -79,7 +86,7 @@ public class PostContentProvider extends ContentProvider {
         switch (match) {
             case ROUTE_POST:
                 String id = uri.getLastPathSegment();
-                count = db.update(PostContract.TABLE_NAME, values, "id=" + Integer.parseInt(id), null);
+                count = db.update(PostContract.TABLE_NAME, values, Post.KEY_ID + "=" + Integer.parseInt(id), null);
                 break;
             default:
                 throw new UnsupportedOperationException();
@@ -94,7 +101,7 @@ public class PostContentProvider extends ContentProvider {
         switch (match) {
             case ROUTE_POST:
                 String id = uri.getLastPathSegment();
-                count = getHelper().getPostRuntimeDao().deleteById(Integer.parseInt(id));
+                count = getHelper().getPostDao().deleteById(Integer.parseInt(id));
                 break;
             default:
                 throw new UnsupportedOperationException();

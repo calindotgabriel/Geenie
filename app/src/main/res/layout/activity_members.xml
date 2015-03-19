@@ -10,62 +10,54 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?colorPrimaryDark">
+        android:layout_height="wrap_content">
 
         <include
             android:id="@+id/app_bar"
             layout="@layout/app_bar" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/members_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@id/app_bar"
-            android:background="@color/background">
+            android:scrollbars="vertical"
 
-            <TextView
-                android:id="@+id/text_empty"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:text="Under construction :("
-                android:textColor="@color/primary_text"
-                android:textSize="20dp" />
-
-
-        </RelativeLayout>
+            />
 
 
     </RelativeLayout>
+
 
     <!-- The navigation drawer -->
 
     <RelativeLayout
         android:id="@+id/left_drawer"
-        android:layout_width="304dp"
+        android:layout_width="260dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/background"
-        android:elevation="10dp"
-        android:orientation="vertical">
+        android:background="#DADADA"
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/imgvw"
-            android:layout_width="304dp"
+            android:layout_width="280dp"
             android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
             android:background="?colorPrimary"
             android:tint="@color/photo_tint" />
 
 
         <ListView
             android:id="@+id/drawer_items"
-            android:layout_width="match_parent"
+            android:layout_width="260dp"
             android:layout_height="match_parent"
             android:layout_below="@id/imgvw"
             android:layout_gravity="start"
             android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent" />
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10dp" />
 
         <TextView
             android:layout_width="wrap_content"

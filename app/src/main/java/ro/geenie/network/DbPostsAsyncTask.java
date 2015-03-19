@@ -1,17 +1,14 @@
 package ro.geenie.network;
 
 import android.app.Activity;
-import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ro.geenie.R;
 import ro.geenie.db.PostsProvider;
 import ro.geenie.models.Post;
 import ro.geenie.models.exception.PostsProviderException;
 import ro.geenie.models.orm.OrmActivityAsyncTask;
-import ro.geenie.util.Utils;
 
 /**
  * Created by motan on 02.03.2015.
@@ -48,17 +45,17 @@ public class DbPostsAsyncTask extends OrmActivityAsyncTask<String, String, List<
 
     private void addPostsToLocalDb(List<Post> posts) {
         for (Post post : posts) {
-            getHelper().getPostRuntimeDao().createOrUpdate(post);
+            getHelper().getPostDao().createOrUpdate(post);
         }
     }
-
-    @Override
-    protected void onPostExecute(List<Post> posts) {
-        Utils.toastLog(getActivity(), message);
-        RecyclerView recyclerView =
-                (RecyclerView) getActivity().findViewById(R.id.dash_recycler_view);
-        recyclerView.invalidate();
-    }
+//
+//    @Override
+//    protected void onPostExecute(List<Post> posts) {
+//        Utils.toastLog(getActivity(), message);
+//        RecyclerView recyclerView =
+//                (RecyclerView) getActivity().findViewById(R.id.dash_recycler_view);
+//        recyclerView.invalidate();
+//    }
 
 
 

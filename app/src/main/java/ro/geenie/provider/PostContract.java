@@ -6,7 +6,7 @@ import android.net.Uri;
  * Created by motan on 09.03.2015.
  */
 public class PostContract {
-    public static final String AUTHORITY = "ro.geenie.provider.PostContentProvider";
+    public static final String AUTHORITY = "ro.geenie.sync.SyncService";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
     public static final String TABLE_NAME = "posts";
     public static final Uri POSTS_URI =

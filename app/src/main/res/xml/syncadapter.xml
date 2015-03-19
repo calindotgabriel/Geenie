@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sync-adapter
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:contentAuthority="ro.geenie.sync"
+    android:contentAuthority="ro.geenie.sync.SyncAdapter"
     android:accountType="ro.geenie"
     android:userVisible="false"
     android:supportsUploading="false"

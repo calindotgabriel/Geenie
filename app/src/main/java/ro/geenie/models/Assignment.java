@@ -1,29 +1,37 @@
 package ro.geenie.models;
 
+import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.util.Calendar;
 
 /**
  * Created by loopiezlol on 04.03.2015.
  */
-public class AssignmentItem {
+@DatabaseTable(tableName = "assignments")
+public class Assignment {
 
+    @DatabaseField
     String title;
+    @DatabaseField
     int click;
+    @DatabaseField(dataType = DataType.SERIALIZABLE)
     Calendar calendar;
+    @DatabaseField
     String tag;
 
-    public AssignmentItem() {
+    public Assignment() {
     }
 
-
-    public AssignmentItem(String title, int click, Calendar calendar) {
+    public Assignment(String title, int click, Calendar calendar) {
         this.title = title;
         this.click = click;
         this.calendar = calendar;
 
     }
 
-    public AssignmentItem(String title, int click, Calendar calendar, String tag) {
+    public Assignment(String title, int click, Calendar calendar, String tag) {
         this.title = title;
         this.click = click;
         this.calendar = calendar;

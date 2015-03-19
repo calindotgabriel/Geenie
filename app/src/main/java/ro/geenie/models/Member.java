@@ -7,24 +7,37 @@ import com.j256.ormlite.table.DatabaseTable;
  * Created by motan on 27.02.2015.
  */
 @DatabaseTable(tableName = "members")
-public class Member {
+public class Member extends Item{
 
-    @DatabaseField(generatedId = true)
+
+    public static final String KEY_USER = "user";
+    public static final String KEY_OWNER = "owner";
+    @DatabaseField(id = true)
     private int id;
-    @DatabaseField
+    @DatabaseField(columnName = KEY_USER)
     private String user;
-    @DatabaseField
-    private boolean isAdmin;
-    @DatabaseField
+    @DatabaseField (columnName = KEY_OWNER)
     private boolean isOwner;
 
     public Member() {
     }
 
-    public Member(String user, boolean isAdmin, boolean isOwner) {
+    public Member(int id, String user , boolean isOwner) {
+        this.id = id;
         this.user = user;
-        this.isAdmin = isAdmin;
         this.isOwner = isOwner;
+    }
+
+    public Member(int id, String user, boolean isAdmin, boolean isOwner) {
+        this.id = id;
+        this.user = user;
+        this.isOwner = isOwner;
+    }
+
+    public Member(int id, String user) {
+        this.id = id;
+        this.user = user;
+        this.isOwner = false;
     }
 
     public int getId() {
@@ -35,20 +48,12 @@ public class Member {
         this.id = id;
     }
 
-    public String getUser() {
+    public String getName() {
         return user;
     }
 
     public void setUser(String user) {
         this.user = user;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
     }
 
     public boolean isOwner() {
@@ -57,5 +62,15 @@ public class Member {
 
     public void setIsOwner(boolean isOwner) {
         this.isOwner = isOwner;
+    }
+
+    @Override
+    public String getTitle() {
+        return this.getName();
+    }
+
+    @Override
+    public String getSubtitle() {
+        return this.isOwner() ? "is owner" : "not owner";
     }
 }
