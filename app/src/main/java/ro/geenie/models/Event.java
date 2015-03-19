@@ -13,7 +13,7 @@ import java.util.Calendar;
 @DatabaseTable(tableName = "events")
 public class Event {
 
-    @DatabaseField
+    @DatabaseField(id = true)
     private long libraryId;
     @DatabaseField(dataType = DataType.SERIALIZABLE)
     private Calendar startTime;

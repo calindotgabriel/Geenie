@@ -25,14 +25,16 @@ import butterknife.OnClick;
 import ro.geenie.R;
 import ro.geenie.fragments.NewAssignmentDialog;
 import ro.geenie.models.Assignment;
+import ro.geenie.models.orm.OrmActivity;
 import ro.geenie.util.AlarmReceiver;
 import ro.geenie.views.adapters.AssignmentAdapter;
 
 
-public class AssignmentsActivity extends BaseActivity implements NewAssignmentDialog.assignmentActivityListener {
+public class AssignmentsActivity extends OrmActivity implements NewAssignmentDialog.assignmentActivityListener {
+
 
     public RecyclerView recyclerView;
-    public List<Assignment> mockList = new ArrayList<>();
+    public List<Assignment> assignmentList = new ArrayList<>();
     @InjectView(R.id.fab_new_assignment_item)
     FloatingActionButton fab;
     private String[] navMenuTitles;
@@ -51,8 +53,9 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
         initDrawer();
 
         getSupportActionBar().setTitle("Assignments");
-
-        initView(mockList, R.id.assignment_recycler_view, R.layout.assignement_card);
+        
+        assignmentList = getHelper().getAssignmentDao().queryForAll();
+        initView(assignmentList, R.id.assignment_recycler_view, R.layout.assignement_card);
 
         changeVisibility();
     }
@@ -79,7 +82,9 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
 
 
     public void createAssignment(String assignmentTitle, Calendar calendar, String assignmentTag) {
-        mockList.add(new Assignment(assignmentTitle, 0, calendar, assignmentTag));
+        Assignment assignment = new Assignment(assignmentTitle, 0, calendar, assignmentTag);
+        getHelper().getAssignmentDao().create(assignment);
+        assignmentList.add(assignment);
         adapter.notifyDataSetChanged();
         changeVisibility();
     }
@@ -120,9 +125,6 @@ public class AssignmentsActivity extends BaseActivity implements NewAssignmentDi
             text.setVisibility(View.INVISIBLE);
         }
     }
-
-
-    //TODO CHANGE SWITCH - AFTER DB IMPLEMENTATION
 
 
 }

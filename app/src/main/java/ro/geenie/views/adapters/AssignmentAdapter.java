@@ -14,11 +14,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.gc.materialdesign.widgets.SnackBar;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.util.Calendar;
 import java.util.List;
 
 import ro.geenie.R;
+import ro.geenie.db.DatabaseHelper;
 import ro.geenie.models.Assignment;
 import ro.geenie.views.activities.AssignmentsActivity;
 
@@ -26,6 +28,9 @@ import ro.geenie.views.activities.AssignmentsActivity;
  * Created by loopiezlol on 04.03.2015.
  */
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
+
+    public DatabaseHelper dbHelper;
+
 
     OnItemClickListener mItemClickListener;
     private Context context;
@@ -47,7 +52,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Assignment assignment = assignments.get(position);
+        final Assignment assignment = assignments.get(position);
         holder.cardTitle.setText(assignment.getTitle());
 
         int click = assignment.getClick();
@@ -78,6 +83,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
                     @Override
                     public void onClick(View v) {
                         assignments.remove(position);
+                        getHelper().getAssignmentDao().deleteById(assignment.getId());
                         ((AssignmentsActivity) context).changeVisibility();
                         notifyDataSetChanged();
                     }
@@ -139,6 +145,14 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
         }
 
 
+    }
+
+
+    public DatabaseHelper getHelper() {
+        if (dbHelper == null) {
+            dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+        }
+        return dbHelper;
     }
 
 

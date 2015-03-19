@@ -1,112 +1,127 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     >
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    >
 
-    <TextView
-        android:id="@+id/greeting_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:text="@string/greeting_message_signup"
-        android:textColor="?colorPrimaryDark"
-        android:paddingLeft="@dimen/activity_text_content_margin"
-        android:paddingBottom="@dimen/activity_horizontal_margin"
-        />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <LinearLayout
-        android:id="@+id/ll_signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/greeting_signup"
-        android:background="?colorPrimaryDark"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_text_content_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_horizontal_margin"
-        >
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/fullname_signup"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/topMargin"
+            android:background="?colorPrimary"/>
+
+        <RelativeLayout
+            android:layout_marginTop="60dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/fullname"
-            app:baseColor="@android:color/white"
-            app:floatingLabel="highlight"
-            app:maxCharacters="30"
-            app:primaryColor="?colorAccent"
-            app:singleLineEllipsis="true"
-            />
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            >
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/email_signup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/email"
-            app:baseColor="@android:color/white"
-            app:floatingLabel="highlight"
-            app:maxCharacters="30"
-            app:primaryColor="?colorAccent"
-            app:singleLineEllipsis="true"
-            />
+            <TextView
+                android:id="@+id/greeting_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="@string/greeting_message_signup"
+                android:textColor="?colorPrimaryDark"
+                android:paddingLeft="@dimen/activity_text_content_margin"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/username_signup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/username"
-            app:baseColor="@android:color/white"
-            app:floatingLabel="highlight"
-            app:maxCharacters="20"
-            app:primaryColor="?colorAccent"
-            app:singleLineEllipsis="true" />
+            <LinearLayout
+                android:id="@+id/ll_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_below="@id/greeting_signup"
+                android:background="?colorPrimaryDark"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/activity_text_content_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_horizontal_margin"
+                >
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/fullname_signup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fullname"
+                    app:baseColor="@android:color/white"
+                    app:floatingLabel="highlight"
+                    app:maxCharacters="30"
+                    app:primaryColor="?colorAccent"
+                    app:singleLineEllipsis="true"
+                    />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/email_signup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    app:baseColor="@android:color/white"
+                    app:floatingLabel="highlight"
+                    app:maxCharacters="30"
+                    app:primaryColor="?colorAccent"
+                    app:singleLineEllipsis="true"
+                    />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/username_signup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username"
+                    app:baseColor="@android:color/white"
+                    app:floatingLabel="highlight"
+                    app:maxCharacters="20"
+                    app:primaryColor="?colorAccent"
+                    app:singleLineEllipsis="true" />
 
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/password_signup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="@string/password"
-            app:baseColor="@android:color/white"
-            app:floatingLabel="highlight"
-            app:minCharacters="6"
-            app:primaryColor="?colorAccent" />
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/password_signup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:hint="@string/password"
+                    app:baseColor="@android:color/white"
+                    app:floatingLabel="highlight"
+                    app:minCharacters="6"
+                    app:primaryColor="?colorAccent" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
-
-    </LinearLayout>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
 
 
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/ok_signup"
-        android:layout_width="@dimen/btn"
-        android:layout_height="@dimen/btn"
-        android:background="@drawable/btn_round"
-        android:layout_below="@id/ll_signup"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="-26dp"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:elevation="8dp"
-        />
 
-</RelativeLayout>
+
+            <Button
+                android:id="@+id/ok_signup"
+                android:layout_width="@dimen/btn"
+                android:layout_height="@dimen/btn"
+                android:background="@drawable/btn_round"
+                android:layout_below="@id/ll_signup"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-26dp"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:elevation="8dp"
+                />
+
+        </RelativeLayout>
+        </RelativeLayout>
+
+
 </ScrollView>

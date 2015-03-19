@@ -67,6 +67,17 @@
             android:background="?colorPrimary"
             android:tint="@color/photo_tint" />
 
+
+        <ListView
+            android:id="@+id/drawer_items"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/imgvw"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,15 +88,5 @@
             android:text="Geenie"
             android:textColor="#fffcfcfc"
             android:textSize="50sp" />
-
-
-        <ListView
-            android:id="@+id/drawer_items"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/imgvw"
-            android:layout_gravity="start"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent" />
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

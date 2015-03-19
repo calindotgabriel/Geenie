@@ -20,7 +20,7 @@ import ro.geenie.models.Post;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     public static final String DATABASE_NAME = "geenielocal.db";
-    public static final int DATABASE_VERSION = 11;
+    public static final int DATABASE_VERSION = 13;
 
     private RuntimeExceptionDao<Member, Integer> memberRuntimeDao = null;
     private RuntimeExceptionDao<Post, Integer> postRuntimeDao = null;

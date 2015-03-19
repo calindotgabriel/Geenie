@@ -51,7 +51,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
         public void onPositive(MaterialDialog materialDialog) {
 
             if (getArguments() != null)
-                mCallback.deleteEvent(getArguments().getString("eventName"));
+                mCallback.deleteEvent(getArguments().getLong("id"));
 
             eventName = editEventName.getText().toString();
             if (!eventName.isEmpty()) {
@@ -74,7 +74,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
 
                 //Toast.makeText(getActivity(), getArguments().getInt("position"), Toast.LENGTH_SHORT).show();
 
-                mCallback.deleteEvent(getArguments().getString("eventName"));
+                mCallback.deleteEvent(getArguments().getLong("idF"));
                 materialDialog.dismiss();
             } else {
                 materialDialog.dismiss();
@@ -277,7 +277,7 @@ public class NewEventDialog extends DialogFragment implements View.OnClickListen
 
         public void createEvent(String eventName, int startHour, int endHour, int color, int dayOfWeek, boolean repeat);
 
-        public void deleteEvent(String eventName);
+        public void deleteEvent(long id);
     }
 
 

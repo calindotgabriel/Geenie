@@ -20,8 +20,18 @@ public class Assignment {
     Calendar calendar;
     @DatabaseField
     String tag;
+    @DatabaseField(id = true)
+    int id;
 
     public Assignment() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Assignment(String title, int click, Calendar calendar) {
@@ -71,4 +81,6 @@ public class Assignment {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
 }

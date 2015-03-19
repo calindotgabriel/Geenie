@@ -1,5 +1,5 @@
 #
-# generated on 2015/03/19 05:29:18
+# generated on 2015/03/20 12:27:35
 #
 # --table-start--
 dataClass=ro.geenie.models.Member
@@ -57,6 +57,10 @@ dataPersister=SERIALIZABLE
 # --field-start--
 fieldName=tag
 # --field-end--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
 # --table-fields-end--
 # --table-end--
 #################################
@@ -66,6 +70,7 @@ tableName=events
 # --table-fields-start--
 # --field-start--
 fieldName=libraryId
+id=true
 # --field-end--
 # --field-start--
 fieldName=startTime

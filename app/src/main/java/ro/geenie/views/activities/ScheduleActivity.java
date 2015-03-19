@@ -12,7 +12,6 @@ import com.alamkanak.weekview.WeekViewEvent;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -20,20 +19,21 @@ import butterknife.OnClick;
 import ro.geenie.R;
 import ro.geenie.fragments.NewEventDialog;
 import ro.geenie.models.Event;
+import ro.geenie.models.orm.OrmActivity;
 
 /**
  * Created by loopiezlol on 09.02.2015.
  */
-public class ScheduleActivity extends BaseActivity implements WeekView.MonthChangeListener,
+public class ScheduleActivity extends OrmActivity implements WeekView.MonthChangeListener,
         WeekView.EventClickListener, WeekView.EventLongPressListener, NewEventDialog.scheduleActivityListener, WeekView.EmptyViewLongPressListener {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private static final int TYPE_WEEK_VIEW = 3;
-    List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
     int id = 0;
-    List<Event> eventsextended = new ArrayList<>();
+
+    private List<Event> eventsextended = new ArrayList<>();
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
     private WeekView mWeekView;
@@ -45,28 +45,28 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
         super.onResume();
         setContentView(R.layout.activity_schedule);
         ButterKnife.inject(this);
+        initDrawer();
+
+        getSupportActionBar().setTitle("Schedule");
+
+        mWeekView = (WeekView) findViewById(R.id.weekView);
+        mWeekView.setOnEventClickListener(this);
+        mWeekView.setMonthChangeListener(this);
+        mWeekView.setEventLongPressListener(this);
+        mWeekView.setEmptyViewLongPressListener(this);
+
+        ta = getResources().obtainTypedArray(R.array.colors);
+
+        mWeekView.goToHour(7);
+    }
+
+    private void initDrawer() {
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
 
         navMenuIcons = getResources()
                 .obtainTypedArray(R.array.nav_drawer_icons);//load icons from strings.xml
 
         set(navMenuTitles, navMenuIcons);
-
-        getSupportActionBar().setTitle("Schedule");
-
-        mWeekView = (WeekView) findViewById(R.id.weekView);
-
-        mWeekView.setOnEventClickListener(this);
-
-        mWeekView.setMonthChangeListener(this);
-
-        mWeekView.setEventLongPressListener(this);
-
-        mWeekView.setEmptyViewLongPressListener(this);
-
-        ta = getResources().obtainTypedArray(R.array.colors);
-
-        mWeekView.goToHour(7);
     }
 
 
@@ -166,13 +166,12 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
         bundle.putInt("dayOfWeek", event.getStartTime().get(Calendar.DAY_OF_WEEK));
         boolean repeat = false;
         for (Event extended : eventsextended) {
-
             if (event.getId() == extended.getEvent().getId()) {
                 repeat = extended.getRepeat();
-
             }
         }
         bundle.putBoolean("repeat", repeat);
+        bundle.putLong("id", event.getId());
         NewEventDialog dialog = new NewEventDialog();
         dialog.setArguments(bundle);
         dialog.show(ScheduleActivity.this);
@@ -185,7 +184,7 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
         List<WeekViewEvent> weekViewEvents = new ArrayList<WeekViewEvent>();
         List<Event> allEvents = new ArrayList<>();
 
-
+        eventsextended = getHelper().getEventDao().queryForAll();
         for (Event parent : eventsextended) {
 
             int startHour = parent.getEvent().getStartTime().get(Calendar.HOUR_OF_DAY);
@@ -260,6 +259,7 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
             mColors[j] = ta.getColor(j, 0);
         event.setColor(mColors[colorIndex]);
         Event extended = new Event(event, repeat);
+        getHelper().getEventDao().create(extended);
         eventsextended.add(extended);
 
         mWeekView.notifyDatasetChanged();
@@ -267,19 +267,19 @@ public class ScheduleActivity extends BaseActivity implements WeekView.MonthChan
 
     }
 
-    public void deleteEvent(String eventName) {
-        Iterator<Event> iter = eventsextended.iterator();
-        while (iter.hasNext()) {
-            Event event = iter.next();
-            if (event.getEvent().getName().equals(eventName)) {
-                iter.remove();
+    public void deleteEvent(long id) {
+        for (Event extended : eventsextended) {
+            if (id == extended.getEvent().getId()) {
+
+                getHelper().getEventDao().delete(extended);
+
             }
+
+            mWeekView.notifyDatasetChanged();
         }
 
-        mWeekView.notifyDatasetChanged();
+
     }
-
-
 }
 
 
