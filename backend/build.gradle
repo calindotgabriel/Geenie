@@ -24,7 +24,8 @@ targetCompatibility = JavaVersion.VERSION_1_7
 dependencies {
     appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.18'
     compile 'javax.servlet:servlet-api:2.5'
-    compile 'org.postgresql:postgresql:9.3-1100-jdbc41'
+    compile 'com.sun.jersey:jersey-bundle:1.19'
+    compile 'mysql:mysql-connector-java:5.1.6'
 }
 \
 appengine {

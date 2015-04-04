@@ -1,7 +1,9 @@
 package ro.geenie.views.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -10,10 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ro.geenie.R;
-import ro.geenie.controller.LocalOwnerController;
-import ro.geenie.controller.MemberController;
-import ro.geenie.models.exception.MemberProviderException;
-import ro.geenie.util.Utils;
+import ro.geenie.contracts.LoginContract;
 
 /**
  * Created by motan on 08.02.2015.
@@ -22,60 +21,30 @@ public class LoginActivity extends Activity {
 
     @InjectView(R.id.username_login)
     MaterialEditText username;
-    @InjectView(R.id.password_login)
-    MaterialEditText password;
 
-    private LocalOwnerController ownerController;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        ownerController = new LocalOwnerController(this);
-//        if (ownerController.isOwnerRegistered()) {
-//            Intent intent = new Intent(LoginActivity.this, DashActivity.class);
-//            startActivity(intent);
-//        }
-
-        setContentView(R.layout.activity_login);
-        ButterKnife.inject(this);
-
-        debugOnly();
-
-    }
-
-    private void debugOnly() {
-        username.setText("ion");
-        password.setText("123456");
-//        goLogin();
-    }
-
-    @OnClick(R.id.ok_login)
-    void goLogin() {
-//        LoginTaskParams loginParams = new LoginTaskParams(this,
-//                username.getText().toString(),
-//                password.getText().toString()
-//        );
-//        new DbLoginAsyncTask().execute(loginParams);
-        String enteredName = username.getText().toString();
-        MemberController memberController = new MemberController(this);
-        try {
-            if (memberController.isMemberValid(enteredName)) {
-//                ownerController.registerLocalOwner(enteredName);
-            Intent intent = new Intent(LoginActivity.this, DashActivity.class);
-            startActivity(intent);
-            }
-        } catch (MemberProviderException e) {
-            Utils.toastLog(this, e.getMessage());
-            e.printStackTrace();
+        prefs = this.getSharedPreferences(LoginContract.KEY_APP_NAME, Context.MODE_PRIVATE);
+        String userName = prefs.getString(LoginContract.KEY_USERNAME, LoginContract.DEFAULT_USERNAME);
+        if (userName.equals(LoginContract.DEFAULT_USERNAME)) {
+            setContentView(R.layout.activity_login);
+            ButterKnife.inject(this);
+        } else {
+            goToDash();
         }
     }
 
-    @OnClick(R.id.signup_login)
-    void goSignUp() {
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-        startActivity(intent);
+    @OnClick(R.id.ok_login) void okPressed() {
+        prefs.edit().putString(LoginContract.KEY_USERNAME, username.getText().toString()).apply();
+        goToDash();
     }
 
+    private void goToDash() {
+        Intent intent = new Intent(LoginActivity.this, DashActivity.class);
+        startActivity(intent);
+    }
 
 }

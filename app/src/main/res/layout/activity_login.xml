@@ -15,7 +15,9 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context=".MainActivity">
+        tools:context=".MainActivity"
+       >
+
 
 
         <LinearLayout
@@ -29,7 +31,7 @@
             android:paddingLeft="@dimen/activity_text_content_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_horizontal_margin"
-
+            android:elevation="6dp"
             >
 
             <com.rengwuxian.materialedittext.MaterialEditText
@@ -43,7 +45,7 @@
                 app:primaryColor="?colorAccent"
                 app:singleLineEllipsis="true" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
+        <!--    <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/password_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,38 +55,38 @@
                 app:floatingLabel="highlight"
                 app:minCharacters="6"
                 app:primaryColor="?colorAccent" />
-
+-->
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="30dp" />
+                android:layout_height="10dp" />
 
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/ok_login"
+            android:layout_width="@dimen/btn"
+            android:layout_height="@dimen/btn"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/btn_round"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:elevation="6dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/ll_login"
             android:paddingBottom="@dimen/activity_horizontal_margin"
-            android:paddingLeft="@dimen/activity_text_content_margin"
+            android:layout_centerInParent="true"
             android:text="@string/greeting_message_login"
             android:textColor="?colorPrimary"
             android:textSize="28sp" />
 
 
-        <Button
-            android:id="@+id/ok_login"
-            android:layout_width="@dimen/btn"
-            android:layout_height="@dimen/btn"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/ll_login"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="-26dp"
-            android:background="@drawable/btn_round"
-            android:elevation="6dp" />
 
-        <TextView
+
+        <!--<TextView
             android:id="@+id/signup_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,7 +94,7 @@
             android:layout_centerInParent="true"
             android:text="@string/signup_message"
             android:textColor="?colorPrimary"
-            android:textSize="20sp" />
+            android:textSize="20sp" />-->
 
 
     </RelativeLayout>

@@ -40,7 +40,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="servlet-api-2.5" level="project" />
-    <orderEntry type="library" exported="" name="postgresql-9.3-1100-jdbc41" level="project" />
+    <orderEntry type="library" exported="" name="jersey-bundle-1.19" level="project" />
+    <orderEntry type="library" exported="" name="mysql-connector-java-5.1.6" level="project" />
+    <orderEntry type="library" exported="" name="jsr311-api-1.1.1" level="project" />
   </component>
 </module>
 

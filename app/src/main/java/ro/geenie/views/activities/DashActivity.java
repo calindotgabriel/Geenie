@@ -23,7 +23,6 @@ import ro.geenie.models.Item;
 import ro.geenie.models.Post;
 import ro.geenie.models.exception.NoOwnerException;
 import ro.geenie.models.orm.OrmActivity;
-import ro.geenie.sync.SyncUtils;
 import ro.geenie.util.Utils;
 import ro.geenie.views.adapters.CardAdapter;
 
@@ -49,7 +48,7 @@ public class DashActivity extends OrmActivity {
         ButterKnife.inject(this);
         initDrawer();
 
-        SyncUtils.TriggerRefresh();
+        //todo move from UI Thread
         posts = getHelper().getPostDao().queryForAll();
         initView(new ArrayList<Item>(posts));
     }
@@ -98,6 +97,7 @@ public class DashActivity extends OrmActivity {
 
                     private void quickLocallyShow(String ownerName, String enteredText) {
                         posts.add(new Post(ownerName, enteredText));
+                        //todo notify
                         recyclerView.swapAdapter(new CardAdapter(getBaseContext(),
                                                  new ArrayList<Item>(posts)),
                                                  false);

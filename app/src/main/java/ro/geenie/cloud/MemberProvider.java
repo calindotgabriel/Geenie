@@ -4,8 +4,7 @@ package ro.geenie.cloud;
  * Created by motan on 18.03.2015.
  */
 public class MemberProvider {
-/*
-    public static List<Member> getAllMembers() throws MemberProviderException {
+    /*public static List<Member> getAllMembers() throws MemberProviderException {
         List<Member> members = new ArrayList<>();
         try {
             Connection connection =
@@ -28,4 +27,5 @@ public class MemberProvider {
         }
         return members;
     }*/
+
 }
