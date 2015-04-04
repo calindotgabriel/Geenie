@@ -60,7 +60,7 @@ public class ScheduleActivity extends OrmActivity implements WeekView.MonthChang
         mWeekView.goToHour(7);
     }
 
-    private void initDrawer() {
+    protected void initDrawer() {
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
 
         navMenuIcons = getResources()

@@ -8,8 +8,10 @@ import ro.geenie.views.activities.BaseActivity;
 /**
  * Created by motan on 27.02.2015.
  */
-public class OrmActivity extends BaseActivity {
+public abstract class OrmActivity extends BaseActivity {
     public DatabaseHelper dbHelper;
+
+
 
     public DatabaseHelper getHelper() {
         if (dbHelper == null) {

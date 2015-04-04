@@ -20,6 +20,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     private Context context;
     private List<Item> items;
 
+    public CardAdapter(Context context) {
+        this.context = context;
+    }
+
     public CardAdapter(Context context, List<Item> items) {
         this.context = context;
         this.items = items;
@@ -41,10 +45,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     }
 
+    public void setData(List<Item> items) {
+        this.items = items;
+    }
+
 
     @Override
     public int getItemCount() {
-        return items.size();
+        if (items != null)
+            return items.size();
+        return 0;
     }
 
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {

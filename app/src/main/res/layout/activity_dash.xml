@@ -10,9 +10,11 @@
     <!-- Add content here -->
 
     <RelativeLayout
+        android:id="@+id/container_dash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?colorPrimaryDark">
+        android:background="?colorPrimaryDark"
+        >
 
         <include
             android:id="@+id/app_bar"

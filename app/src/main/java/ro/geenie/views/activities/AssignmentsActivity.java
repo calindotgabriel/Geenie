@@ -60,8 +60,8 @@ public class AssignmentsActivity extends OrmActivity implements NewAssignmentDia
         changeVisibility();
     }
 
-
-    private void initDrawer() {
+    @Override
+    protected void initDrawer() {
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
         navMenuIcons = getResources()
                 .obtainTypedArray(R.array.nav_drawer_icons);//load icons from strings.xml

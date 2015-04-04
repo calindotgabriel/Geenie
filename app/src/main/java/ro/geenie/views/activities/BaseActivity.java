@@ -24,7 +24,7 @@ import ro.geenie.views.adapters.NavDrawerListAdapter;
 /**
  * Created by loopiezlol on 09.02.2015.
  */
-public class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends ActionBarActivity {
     protected RelativeLayout _completeLayout, _activityLayout;
     Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
@@ -204,24 +204,29 @@ public class BaseActivity extends ActionBarActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+        if (mDrawerToggle != null) {
+            mDrawerToggle.syncState();
+        }
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        if (mDrawerToggle != null) {
+            mDrawerToggle.onConfigurationChanged(newConfig);
+        }
     }
 
     @Override
     public void onBackPressed() {
-        if (!mDrawerLayout.isDrawerOpen(mDrawer)) {
-            mDrawerLayout.openDrawer(mDrawer);
-        } else {
-            BaseActivity.super.onBackPressed();
+        if (mDrawerLayout != null) {
+            if (!mDrawerLayout.isDrawerOpen(mDrawer)) {
+                mDrawerLayout.openDrawer(mDrawer);
+            } else {
+                BaseActivity.super.onBackPressed();
+            }
         }
-
     }
 
     private class SlideMenuClickListener implements
@@ -233,4 +238,6 @@ public class BaseActivity extends ActionBarActivity {
             displayView(position);
         }
     }
+
+    abstract void initDrawer();
 }
