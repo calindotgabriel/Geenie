@@ -34,20 +34,15 @@ public class ScheduleActivity extends OrmActivity implements WeekView.MonthChang
     int id = 0;
 
     private List<Event> eventsextended = new ArrayList<>();
-    private String[] navMenuTitles;
-    private TypedArray navMenuIcons;
     private WeekView mWeekView;
     private TypedArray ta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.onResume();
         setContentView(R.layout.activity_schedule);
         ButterKnife.inject(this);
-        initDrawer();
 
-        getSupportActionBar().setTitle("Schedule");
 
         mWeekView = (WeekView) findViewById(R.id.weekView);
         mWeekView.setOnEventClickListener(this);
@@ -60,21 +55,18 @@ public class ScheduleActivity extends OrmActivity implements WeekView.MonthChang
         mWeekView.goToHour(7);
     }
 
-    protected void initDrawer() {
-        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
-
-        navMenuIcons = getResources()
-                .obtainTypedArray(R.array.nav_drawer_icons);//load icons from strings.xml
-
-        set(navMenuTitles, navMenuIcons);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTitle("Schedule");
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.schedule_menu, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -37,8 +37,7 @@ import ro.geenie.views.adapters.CardAdapter;
 public class DashActivity extends OrmActivity
         implements LoaderManager.LoaderCallbacks<List<Post>> {
 
-    private String[] navMenuTitles;
-    private TypedArray navMenuIcons;
+
     private List<Post> posts = new ArrayList<Post>();
 
     @InjectView(R.id.dash_recycler_view)
@@ -52,29 +51,13 @@ public class DashActivity extends OrmActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//
-//        FragmentManager fm = getFragmentManager();
-//        PostFragment posts = new PostFragment();
-//        fm.beginTransaction().add(posts, "PostFragment").commit();
-
-
-
         setContentView(R.layout.activity_dash);
         ButterKnife.inject(this);
         initView();
-        initDrawer();
-
-
-
-//        initView(new ArrayList<Item>(posts));
     }
 
-    void initDrawer() {
-        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
-        navMenuIcons = getResources()
-                .obtainTypedArray(R.array.nav_drawer_icons);//load icons from strings.xml
-        set(navMenuTitles, navMenuIcons);
-    }
+
+
 
     private void initView() {
         adapter = new CardAdapter(this);

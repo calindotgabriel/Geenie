@@ -19,12 +19,13 @@ import java.util.ArrayList;
 
 import ro.geenie.R;
 import ro.geenie.models.NavDrawerItem;
+import ro.geenie.util.Utils;
 import ro.geenie.views.adapters.NavDrawerListAdapter;
 
 /**
  * Created by loopiezlol on 09.02.2015.
  */
-public abstract class BaseActivity extends ActionBarActivity {
+public class BaseActivity extends ActionBarActivity {
     protected RelativeLayout _completeLayout, _activityLayout;
     Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
@@ -40,16 +41,24 @@ public abstract class BaseActivity extends ActionBarActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
+    private String[] navMenuTitles;
+    private TypedArray navMenuIcons;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drawer_layout);
+        setContentView(R.layout.activity_base);
         // if (savedInstanceState == null) {
         // // on first time display view for first nav item
         // // displayView(0);
         // }
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initDrawer();
     }
 
     public void set(String[] navMenuTitles, TypedArray navMenuIcons) {
@@ -133,55 +142,41 @@ public abstract class BaseActivity extends ActionBarActivity {
     /**
      * Diplaying fragment view for selected nav drawer list item
      */
-    private void displayView(int position) {
+    private void displayView(int position) throws UnsupportedOperationException {
         // update the main content by replacing fragments
-        Intent intent;
+        Intent intent = null;
         switch (position) {
             case 0:
                 intent = new Intent(this, DashActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             case 1:
                 intent = new Intent(this, ScheduleActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             case 2:
                 intent = new Intent(this, MembersActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             case 3:
                 intent = new Intent(this, FilesActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             case 4:
                 intent = new Intent(this, AssignmentsActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             case 5:
                 intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 break;
 
             default:
-                break;
+                throw new UnsupportedOperationException("No activity defined for this item.");
+
         }
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
@@ -192,7 +187,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(mTitle);
+        getSupportActionBar().setTitle(mTitle);
     }
 
     /**
@@ -234,10 +229,19 @@ public abstract class BaseActivity extends ActionBarActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
-            // display view for selected nav drawer item
-            displayView(position);
+            try {
+                displayView(position);
+            } catch (UnsupportedOperationException e) {
+                Utils.toastLog(getBaseContext(), e.getMessage());
+            }
         }
     }
 
-    abstract void initDrawer();
+    void initDrawer() {
+        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
+        navMenuIcons = getResources()
+                .obtainTypedArray(R.array.nav_drawer_icons);//load icons from strings.xml
+        set(navMenuTitles, navMenuIcons);
+    }
+
 }
